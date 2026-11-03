@@ -1,0 +1,10 @@
+{
+  "pausePreservesPendingTrial": true,
+  "resumeCommitsOnce": true,
+  "stepCompletesPendingTrial": true,
+  "resetDiscardsPendingTrial": true,
+  "staleCallbacksIgnored": true,
+  "speedControl": true,
+  "trialLimit": 500,
+  "stopsExactlyAtLimit": true
+}

@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "index.html",
+    "lecture05/index.html"
+  ],
+  "publicFiles": 16,
+  "checkedReferences": 14,
+  "relativePaths": true,
+  "projectSubpath": true,
+  "javaScriptSyntax": true,
+  "externalRuntimeRequests": false,
+  "courseIndexAndReturnLink": true,
+  "cpsOnly": true,
+  "images": [
+    "lecture05/assets/images/cps-groups.png",
+    "lecture05/assets/images/cps-residuals.png",
+    "lecture05/assets/images/cps-scatter.png"
+  ]
+}

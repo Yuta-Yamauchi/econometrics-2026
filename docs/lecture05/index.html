@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="実データと説明用のシミュレーションから，標本平均と回帰係数の分布を考えます。">
+<title>標本から平均・回帰係数の分布へ｜計量経済学I 第5回</title>
+<link rel="preload" href="assets/fonts/STIXTwoMath-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="assets/css/lesson.css">
+<script src="assets/js/demo-data.js" defer></script><script src="assets/js/demo-core.js" defer></script><script src="assets/js/animation.js" defer></script><script src="assets/js/demo-plots.js" defer></script><script src="assets/js/mean-app.js" defer></script><script src="assets/js/demo-app.js" defer></script>
+</head><body>
+<nav><a class="course" href="#top">計量経済学I · 第5回</a><div><a href="../">教材一覧</a><a href="#examples">実データ</a><a href="#mean-experiment">標本平均</a><a href="#experiment">回帰係数</a></div></nav>
+<main id="top">
+<header><h1>標本から，平均・回帰係数の分布へ</h1></header>
+<section id="examples" aria-labelledby="examples-heading">
+<h2 id="examples-heading">実データの回帰直線</h2>
+<article class="skewed-example" aria-labelledby="cps-heading">
+<h3 id="cps-heading">教育年数と週給（CPS 1988・28,155人）</h3>
+<div class="example-model"><span><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi><mo>=</mo><mi mathvariant="normal">log</mi><mo>(</mo><mtext>週給</mtext><mo>)</mo><mo>,</mo><mspace width=".5em"/><mi>X</mi><mo>=</mo><mtext>教育年数</mtext></math></span><span><math xmlns="http://www.w3.org/1998/Math/MathML"><mover accent="true"><mi>Y</mi><mo>^</mo></mover><mo>=</mo><mn>5.178</mn><mo>+</mo><mn>0.0759</mn><mi>X</mi></math></span></div>
+<div class="example-diagnostics">
+<figure><h4>回帰直線</h4><img src="assets/images/cps-scatter.png" width="1200" height="940" alt="教育年数と週給の自然対数の散布図。全28,155人を表示し，右上がりの回帰直線を重ねる。"></figure>
+<figure><h4>残差の分布</h4><img src="assets/images/cps-residuals.png" width="1200" height="940" alt="残差のヒストグラム。平均0，同じ標準偏差の正規分布と比べて左の裾が長い。残差の歪度はマイナス0.620。"></figure>
+<figure><h4>教育年数ごとの残差</h4><img src="assets/images/cps-groups.png" width="1200" height="940" alt="教育年数0〜12年，13〜15年，16〜18年の残差密度を共通の尺度で比較。残差の標準偏差はそれぞれ0.650，0.739，0.680。"></figure>
+</div>
+<p class="example-finding">残差は左に裾が長く，教育年数別の標準偏差は 0.65〜0.74 です。</p>
+</article></section>
+<section id="mean-experiment" aria-labelledby="mean-heading">
+<h2 id="mean-heading">標本平均のシミュレーション</h2>
+<div class="distribution-setup"><div>
+<div class="model-line"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi><mo>=</mo><mn>2</mn><mo>+</mo><mi>U</mi></math></div><fieldset><legend>誤差</legend><div class="segments"><label><input type="radio" name="mean-model" value="normal"><span>正規</span></label><label><input type="radio" name="mean-model" value="skew" checked><span>右に歪む</span></label><label><input type="radio" name="mean-model" value="strong"><span>強い右歪み</span></label></div></fieldset>
+<div class="error-formulas"><div id="mean-error-normal" hidden><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><msup><mn>1.5</mn><mn>2</mn></msup><mo>)</mo></math></div><div id="mean-error-skew"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>=</mo><mn>1.5</mn><mo>(</mo><mi>E</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>,</mo><mspace width=".3em"/><mi>E</mi><mo>∼</mo><mi mathvariant="normal">Exp</mi><mo>(</mo><mn>1</mn><mo>)</mo></math></div><div id="mean-error-strong" hidden><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>=</mo><mn>1.5</mn><mfrac><mrow><mi>L</mi><mo>−</mo><msup><mi>e</mi><mfrac><mn>1</mn><mn>2</mn></mfrac></msup></mrow><msqrt><mrow><msup><mi>e</mi><mn>2</mn></msup><mo>−</mo><mi>e</mi></mrow></msqrt></mfrac></math><span><math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">log</mi><mi>L</mi><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></math></span></div></div>
+</div><figure class="error-figure"><canvas id="mean-error-shape" aria-label="誤差の密度"></canvas></figure></div>
+<div class="mean-settings"><label class="field" for="mean-size">標本数<select id="mean-size"><option value="20" selected>20</option><option value="200">200</option><option value="2000">2,000</option></select></label></div>
+<div class="controls"><div class="playback"><button id="mean-play" class="primary" type="button">再生</button><button id="mean-step" type="button">1回進める</button><button id="mean-reset" type="button">リセット</button></div><label class="speed" for="mean-speed">速度<select id="mean-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label><span id="mean-count" class="counter" aria-live="polite"></span></div>
+<div class="legend"><span class="key current">今回</span><span class="key past">過去の試行</span><span class="key reference">母平均・正規密度</span></div>
+<div class="plots">
+<article id="mean-phase-points"><h3>標本</h3><canvas id="mean-sample" aria-label="今回のデータ点と標本平均"></canvas></article>
+<article id="mean-phase-average"><h3>標本平均</h3><canvas id="mean-record" aria-label="各試行の標本平均"></canvas><div class="current-fit"><math xmlns="http://www.w3.org/1998/Math/MathML"><mover accent="true"><mi>Y</mi><mo>¯</mo></mover><mo>=</mo><mn id="mean-value">—</mn></math></div></article>
+<article id="mean-phase-collect"><h3>平均の分布</h3><canvas id="mean-sampling" aria-label="標本平均の分布"></canvas><div class="moments"><span>平均 <strong id="mean-estimate-mean"></strong></span><span>標準偏差 <strong id="mean-estimate-sd"></strong></span></div></article>
+</div>
+<div class="batch"><button id="mean-add-hundred" type="button">100回追加</button><button id="mean-restore" type="button">500回の結果</button></div>
+</section>
+<section id="experiment" aria-labelledby="experiment-heading">
+<h2 id="experiment-heading">回帰係数のシミュレーション</h2>
+<div class="distribution-setup"><div>
+<div class="model-line"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi><mo>=</mo><mn>2</mn><mo>+</mo><mn>1.5</mn><mi>X</mi><mo>+</mo><mi>U</mi></math></div><fieldset><legend>誤差</legend><div class="segments"><label><input type="radio" name="model" value="normal"><span>正規</span></label><label><input type="radio" name="model" value="skew" checked><span>右に歪む</span></label><label><input type="radio" name="model" value="strong"><span>強い右歪み</span></label></div></fieldset>
+<div class="error-formulas"><div id="error-normal" hidden><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><msup><mn>1.5</mn><mn>2</mn></msup><mo>)</mo></math></div><div id="error-skew"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>=</mo><mn>1.5</mn><mo>(</mo><mi>E</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>,</mo><mspace width=".3em"/><mi>E</mi><mo>∼</mo><mi mathvariant="normal">Exp</mi><mo>(</mo><mn>1</mn><mo>)</mo></math></div><div id="error-strong" hidden><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>U</mi><mo>=</mo><mn>1.5</mn><mfrac><mrow><mi>L</mi><mo>−</mo><msup><mi>e</mi><mfrac><mn>1</mn><mn>2</mn></mfrac></msup></mrow><msqrt><mrow><msup><mi>e</mi><mn>2</mn></msup><mo>−</mo><mi>e</mi></mrow></msqrt></mfrac></math><span><math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">log</mi><mi>L</mi><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></math></span></div></div>
+</div><figure class="error-figure"><canvas id="error-shape" aria-label="誤差の密度"></canvas></figure></div>
+<div class="settings">
+<fieldset><legend>説明変数</legend><div class="segments"><label><input type="radio" name="design" value="continuous" checked><span>連続変数</span></label><label><input type="radio" name="design" value="binary"><span>2群</span></label></div></fieldset>
+
+<label class="field" for="sample-size">標本数<select id="sample-size"><option value="20" selected>20</option><option value="200">200</option><option value="2000">2,000</option></select></label>
+<fieldset><legend>係数</legend><div class="segments"><label><input type="radio" name="coefficient" value="b1" checked><span>傾き <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub></math></span></label><label><input type="radio" name="coefficient" value="b0"><span>切片 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub></math></span></label></div></fieldset>
+</div>
+<div class="controls"><div class="playback"><button id="animation-play" class="primary" type="button">再生</button><button id="animation-step" type="button">1回進める</button><button id="animation-reset" type="button">リセット</button></div><label class="speed" for="animation-speed">速度<select id="animation-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label><span id="repetition-count" class="counter" aria-live="polite"></span></div>
+<div class="legend"><span class="key current">今回</span><span class="key past">過去の試行</span><span class="key reference">母回帰直線・正規密度</span><label class="checkbox"><input id="show-trails" type="checkbox" checked>全回帰直線を重ねる</label></div>
+<div class="plots">
+<article id="phase-points"><h3>標本</h3><canvas id="scatter" aria-label="今回のデータ点と回帰直線"></canvas></article>
+<article id="phase-line"><h3>回帰直線</h3><canvas id="regression-zoom" aria-label="全回帰直線の拡大図"></canvas><div class="current-fit"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>=</mo><mn id="current-b1">—</mn><mspace width="1em"/><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub><mo>=</mo><mn id="current-b0">—</mn></math></div><span id="line-count" class="sr-only"></span></article>
+<article id="phase-collect"><h3>係数の分布</h3><canvas id="sampling" aria-label="500試行の係数分布"></canvas><div class="moments"><span>平均 <strong id="estimate-mean"></strong></span><span>標準偏差 <strong id="estimate-sd"></strong></span></div></article>
+</div>
+<div class="batch"><button id="add-hundred" type="button">100回追加</button><button id="restore" type="button">500回の結果</button></div>
+<p id="status" class="sr-only" role="status" aria-live="polite"></p>
+</section>
+<section id="comparison" aria-labelledby="comparison-heading"><div class="section-top"><h2 id="comparison-heading">標本数と回帰係数の分布</h2><label class="checkbox"><input id="standardize" type="checkbox" checked>標準化</label></div>
+<div class="comparison-plots"><article><h3><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>20</mn></math></h3><canvas id="compare-20" aria-label="標本数20の係数分布"></canvas></article><article><h3><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>200</mn></math></h3><canvas id="compare-200" aria-label="標本数200の係数分布"></canvas></article><article><h3><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>2,000</mn></math></h3><canvas id="compare-2000" aria-label="標本数2000の係数分布"></canvas></article></div>
+</section><footer>計量経済学I</footer></main>
+<noscript>シミュレーションの表示にはJavaScriptが必要です。</noscript>
+</body></html>
