@@ -1,0 +1,19 @@
+{
+  "checked_on": "2026-11-03",
+  "route": "http://127.0.0.1:4190/econometrics-2026/lecture02/",
+  "runtime": "WebR 準備完了 · ブラウザ内でRを実行",
+  "defaultPopulationSlopes": {
+    "a": "3.6656",
+    "b": "2.3344"
+  },
+  "defaultSampleSlopes": {
+    "a": "3.2950",
+    "b": "2.5446"
+  },
+  "repeatedStatus": "500回完了 · 0.1秒",
+  "repeatedTable": "母集団の傾き β1\t3.6656\t2.3344\n標本OLSの傾きの平均\t3.6670\t2.3329\n標本OLSの傾きの標準偏差\t0.1527\t0.1518",
+  "uniformPopulationSlope": "3.0000",
+  "repeatedResultCleared": true,
+  "browserErrors": [],
+  "returnToIndex": "http://127.0.0.1:4190/econometrics-2026/"
+}

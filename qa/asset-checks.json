@@ -1,16 +1,23 @@
 {
   "pages": [
     "index.html",
+    "lecture02/index.html",
     "lecture05/index.html"
   ],
-  "publicFiles": 16,
-  "checkedReferences": 14,
+  "publicFiles": 33,
+  "checkedReferences": 24,
   "relativePaths": true,
   "projectSubpath": true,
   "javaScriptSyntax": true,
-  "externalRuntimeRequests": false,
+  "externalReferences": [
+    "https://docs.r-wasm.org/webr/latest/",
+    "https://fonts.googleapis.com/",
+    "https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&display=swap",
+    "https://fonts.gstatic.com/",
+    "https://webr.r-wasm.org/v0.6.0/webr.mjs"
+  ],
   "courseIndexAndReturnLink": true,
-  "cpsOnly": true,
+  "lecture05CpsOnly": true,
   "images": [
     "lecture05/assets/images/cps-groups.png",
     "lecture05/assets/images/cps-residuals.png",

@@ -1,0 +1,10 @@
+During startup - Warning messages:
+1: Setting LC_COLLATE=C.UTF-8 failed 
+2: Setting LC_CTYPE=C.UTF-8 failed 
+3: Setting LC_MONETARY=C.UTF-8 failed 
+4: Setting LC_TIME=C.UTF-8 failed 
+All model tests passed.
+[1] "R version 4.6.1 (2026-06-24 ucrt)"
+  group   intercept       slope probability_6_10
+1     A 63.06205827 3.665590264     0.1174983622
+2     B 69.71796091 2.334409736     0.6656315449

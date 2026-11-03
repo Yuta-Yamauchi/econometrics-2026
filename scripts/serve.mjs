@@ -17,7 +17,8 @@ if (!base || !base.startsWith('/') || !base.endsWith('/') || /[?#\\]/.test(base)
 }
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid port.');
 const types = {'.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8', '.png': 'image/png', '.otf': 'font/otf', '.txt': 'text/plain; charset=utf-8'};
+  '.css': 'text/css; charset=utf-8', '.png': 'image/png', '.otf': 'font/otf', '.woff2': 'font/woff2',
+  '.R': 'text/plain; charset=utf-8', '.md': 'text/plain; charset=utf-8', '.txt': 'text/plain; charset=utf-8'};
 
 const server = http.createServer((req, res) => {
   try {

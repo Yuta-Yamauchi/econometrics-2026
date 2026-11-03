@@ -1,5 +1,13 @@
 # 出典と収録内容
 
+## 第2回の教材
+
+`lecture02_weighting_empirical_github_pages`の公開用ファイルを`docs/lecture02/`へ収録しています。教材名はXの分布と線形射影です。仮想データを生成するJavaScriptとRコード，フォント一式を保持し，ページ上部に教材一覧へのリンクを設けています。
+
+計算には[WebR](https://docs.r-wasm.org/webr/latest/) 0.6.0を使います。`app.js`が外部配信のWebRモジュールと，同じフォルダーにある`model.R`を読み込みます。日本語フォントはGoogle Fontsから取得します。
+
+元教材の計算検証は`qa/lecture02/model_tests.R`，保存済みの検証記録は`qa/lecture02/source-verification.json`に収録しています。
+
 ## 第5回の教材
 
 [標本から，平均・回帰係数の分布へ](https://econometrics-nonnormal-regression-2026.mchyuta.chatgpt.site/)をもとに，2026年11月3日にGitHub Pages用のファイルを整理しました。移行元はSitesの保存版7に対応するソースです。
@@ -21,4 +29,6 @@
 
 ## 数式フォント
 
-STIX Two Mathを同梱しています。フォントの著作権表示とSIL Open Font License 1.1は，[OFL.txt](docs/lecture05/assets/fonts/OFL.txt)に収録しています。
+第2回はTeX Gyre HerosとMLModernをもとにしたWebフォントを同梱しています。著作権表示・ライセンス・変換元は`docs/lecture02/fonts/`にあり，[FONT-NOTICES.txt](docs/lecture02/fonts/FONT-NOTICES.txt)に対応を記載しています。
+
+第5回はSTIX Two Mathを同梱しています。フォントの著作権表示とSIL Open Font License 1.1は，[OFL.txt](docs/lecture05/assets/fonts/OFL.txt)に収録しています。

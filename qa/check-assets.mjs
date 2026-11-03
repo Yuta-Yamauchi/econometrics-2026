@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 
 const root = fileURLToPath(new URL('../docs/', import.meta.url));
@@ -24,8 +25,23 @@ for (const file of files.filter(file => file.endsWith('.html'))) {
   pages.set(file, {html, ids: new Set(ids)});
 }
 const checked = new Set();
+const externalReferences = new Set();
+const lecture02ExternalOrigins = new Set([
+  'https://fonts.googleapis.com', 'https://fonts.gstatic.com',
+  'https://docs.r-wasm.org', 'https://webr.r-wasm.org'
+]);
 const publicPrefix = 'https://example.github.io/test-repository/';
 function checkReference(from, ref) {
+  if (ref.startsWith('https://')) {
+    const external = new URL(ref.replaceAll('&amp;', '&'));
+    assert.ok(from.startsWith('lecture02/') && lecture02ExternalOrigins.has(external.origin), `Unexpected external reference: ${from} -> ${ref}`);
+    externalReferences.add(external.href);
+    return;
+  }
+  if (ref.startsWith('data:image/svg+xml,')) {
+    assert.equal(from, 'lecture02/index.html', 'Unexpected embedded image.');
+    return;
+  }
   assert.ok(!/^(?:\/|[a-z][a-z\d+.-]*:)/i.test(ref), `Non-relative reference: ${ref}`);
   const url = new URL(ref, publicPrefix + from);
   assert.ok(url.href.startsWith(publicPrefix), `Reference leaves the repository: ${ref}`);
@@ -46,23 +62,42 @@ for (const file of files.filter(file => file.endsWith('.css'))) {
 }
 for (const file of files.filter(file => file.endsWith('.js'))) {
   const code = fs.readFileSync(path.join(root, file), 'utf8');
-  new vm.Script(code, {filename: file});
-  assert.ok(!/\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/.test(code), `Unexpected network dependency: ${file}`);
+  if (file === 'lecture02/app.js') {
+    const syntax = spawnSync(process.execPath, ['--input-type=module', '--check'], {input: code, encoding: 'utf8'});
+    assert.equal(syntax.status, 0, syntax.stderr);
+    const webR = code.match(/const WEBR_URL = ['"]([^'"]+)['"]/);
+    assert.ok(webR, 'WebR module URL missing.');
+    checkReference(file, webR[1]);
+    for (const match of code.matchAll(/new URL\(['"]([^'"]+)['"],\s*import\.meta\.url\)/g)) checkReference(file, match[1]);
+  } else {
+    new vm.Script(code, {filename: file});
+    assert.ok(!/\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/.test(code), `Unexpected network dependency: ${file}`);
+  }
 }
 assert.ok(known.has('.nojekyll'));
 assert.ok(known.has('lecture05/assets/fonts/OFL.txt'));
 const lecture = pages.get('lecture05/index.html').html;
-assert.ok(pages.get('index.html').html.includes('href="lecture05/"'));
-assert.ok(lecture.includes('href="../"'));
+for (const lesson of ['lecture02', 'lecture05']) {
+  assert.ok(pages.get('index.html').html.includes(`href="${lesson}/"`));
+  assert.ok(pages.get(`${lesson}/index.html`).html.includes('href="../"'));
+}
 assert.ok(lecture.includes('CPS 1988・28,155人'));
 assert.ok(!/father-son|father\.son|star-reading|Project STAR|父親|息子/.test(lecture));
 const images = files.filter(file => file.startsWith('lecture05/assets/images/')).sort();
 assert.deepEqual(images, ['lecture05/assets/images/cps-groups.png', 'lecture05/assets/images/cps-residuals.png', 'lecture05/assets/images/cps-scatter.png']);
+// Licenses and conversion sources accompany the distributed font files.
+const fontDistributionFiles = new Set([
+  'lecture05/assets/fonts/OFL.txt', 'lecture02/fonts/FONT-NOTICES.txt',
+  'lecture02/fonts/GUST-FONT-LICENSE.txt', 'lecture02/fonts/LPPL-1.3c.txt',
+  'lecture02/fonts/build_fonts.py', 'lecture02/fonts/sources/mlmmi12.pfb',
+  'lecture02/fonts/sources/mlmr12.pfb', 'lecture02/fonts/sources/mlmsy10.pfb'
+]);
+for (const file of fontDistributionFiles) assert.ok(known.has(file), `Missing font distribution file: ${file}`);
 for (const file of files) {
-  assert.ok(checked.has(file) || file.endsWith('/fonts/OFL.txt') || file === '.nojekyll', `Unreferenced public file: ${file}`);
+  assert.ok(checked.has(file) || fontDistributionFiles.has(file) || file === '.nojekyll', `Unreferenced public file: ${file}`);
 }
 const report = {pages: [...pages.keys()],publicFiles: files.length,checkedReferences: checked.size,
-  relativePaths: true,projectSubpath: true,javaScriptSyntax: true,externalRuntimeRequests: false,
-  courseIndexAndReturnLink: true,cpsOnly: true,images};
+  relativePaths: true,projectSubpath: true,javaScriptSyntax: true,externalReferences: [...externalReferences].sort(),
+  courseIndexAndReturnLink: true,lecture05CpsOnly: true,images};
 fs.writeFileSync(new URL('./asset-checks.json', import.meta.url), JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify(report, null, 2));
