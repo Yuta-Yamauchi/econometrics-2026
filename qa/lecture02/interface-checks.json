@@ -1,0 +1,13 @@
+{
+  "downloadControlPresent": false,
+  "footer": "第2回講義 · 割付確率による近似誤差の重みづけ",
+  "headings": [
+    "実験の設定",
+    "分布と散布図を比べる",
+    "標本を取り直すと，傾きはどう動くか"
+  ],
+  "operationHelpLinkPresent": false,
+  "repeatStatus": "500回完了 · 0.1秒",
+  "runtime": "WebR 準備完了 · ブラウザ内でRを実行",
+  "browserErrors": []
+}

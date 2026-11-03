@@ -93,8 +93,9 @@ const fontDistributionFiles = new Set([
   'lecture02/fonts/sources/mlmr12.pfb', 'lecture02/fonts/sources/mlmsy10.pfb'
 ]);
 for (const file of fontDistributionFiles) assert.ok(known.has(file), `Missing font distribution file: ${file}`);
+const publicDocumentation = new Set(['lecture02/README.md']);
 for (const file of files) {
-  assert.ok(checked.has(file) || fontDistributionFiles.has(file) || file === '.nojekyll', `Unreferenced public file: ${file}`);
+  assert.ok(checked.has(file) || fontDistributionFiles.has(file) || publicDocumentation.has(file) || file === '.nojekyll', `Unreferenced public file: ${file}`);
 }
 const report = {pages: [...pages.keys()],publicFiles: files.length,checkedReferences: checked.size,
   relativePaths: true,projectSubpath: true,javaScriptSyntax: true,externalReferences: [...externalReferences].sort(),

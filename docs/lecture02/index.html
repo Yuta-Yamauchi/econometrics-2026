@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&amp;display=swap">
   <link rel="stylesheet" href="./style.css?v=20261015-2">
   <link rel="stylesheet" href="./fonts/fonts.css">
-  <script type="module" src="./app.js?v=20261015-2"></script>
+  <script type="module" src="./app.js?v=20261103-1"></script>
 </head>
 <body>
   <a class="skip" href="#experiment">シミュレーションへ</a>
@@ -96,14 +96,9 @@
             <div class="plots-pair"><div class="repeat-plot group-a"><h3 class="a-text">分布 A からの標本</h3><div id="hist-a" class="chart histogram"></div></div><div class="repeat-plot group-b"><h3 class="b-text">分布 B からの標本</h3><div id="hist-b" class="chart histogram"></div></div></div><p class="caption">縦線は各分布の母集団の傾きです。横軸と度数の目盛りは両分布で共通です。</p><div class="table-wrap"><table><caption>繰り返し実験の結果</caption><thead><tr><th scope="col">比較する量</th><th scope="col">分布 A</th><th scope="col">分布 B</th></tr></thead><tbody id="repeat-table"></tbody></table></div></div>
           <div id="repeat-empty" class="empty-state"><span aria-hidden="true">↗</span><p>実行すると，2つの分布から得られる<br>OLSの傾きのヒストグラムを表示します。</p></div>
         </section>
-        <section class="section method-section" aria-labelledby="method-heading">
-          <h2 id="method-heading">計算とデータ</h2>
-          <div class="download-row"><button id="download-r" class="secondary" disabled>現在の設定のRコードを保存</button><a href="./model.R" download>計算本体 model.R</a></div>
-          <p class="caption">Rコードには表示中の観測数と繰り返し回数も記録します。計算には <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noreferrer">WebR</a> 0.6.0を使います。読み込みにはインターネット接続が必要です。</p>
-        </section>
       </div>
     </div>
   </main>
-  <footer><span>第2回講義 · 割付確率による近似誤差の重みづけ</span><a href="./README.md">操作説明</a></footer>
+  <footer><span>第2回講義 · 割付確率による近似誤差の重みづけ</span></footer>
 </body>
 </html>

@@ -20,7 +20,7 @@ function error(message = '') { $('error').textContent = message; $('error').hidd
 function updateButtons() {
   const fresh = ready && !busy && current && completedRevision === revision;
   for (const id of ['resample', 'run-repeat']) $(id).disabled = !ready || busy || pending || completedRevision !== revision;
-  for (const id of ['play', 'show-all', 'visible-n', 'download-r']) $(id).disabled = !fresh;
+  for (const id of ['play', 'show-all', 'visible-n']) $(id).disabled = !fresh;
 }
 function syncControls() {
   for (const id of ['mu-a', 'sd-a', 'mu-b', 'sd-b', 'sigma']) $(`${id}-value`).value = fmt(Number($(id).value), 1);
@@ -299,17 +299,6 @@ async function runRepeated() {
   } catch (e) { if (token === revision) { error(`繰り返し実験を実行できませんでした：${e.message}`); $('repeat-status').textContent = '再実行してください。'; } }
   finally { busy = false; updateButtons(); if (pending) void calculate(); }
 }
-function download(name, text, type) {
-  const url = URL.createObjectURL(new Blob([text],{type}));
-  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
-  setTimeout(()=>URL.revokeObjectURL(url), 1000);
-}
-function downloadR() {
-  const count = Number($('repetitions').value);
-  const appendix = `\n# ---- Settings used on the page ----\nresult <- experiment(${argumentsR(currentSettings)})\nvisible_n <- ${shown}\nmc <- repeat_experiment(${argumentsR(currentSettings)}, repetitions = ${count})\n\n# Population coefficients and the OLS coefficients of the visible sample.\nprint(lapply(result[c("a", "b")], function(d) {\n  list(population = d$population,\n       visible_ols = coef(lm(y ~ x, data = data.frame(\n         x = d$x[seq_len(visible_n)], y = d$y[seq_len(visible_n)]))))\n}))\nprint(result$losses)\nprint(mc[c("mean_a", "mean_b", "sd_a", "sd_b")])\n\n# Axes depend only on the conditional mean, as on the page.\npar(mfrow = c(1, 2))\nylim <- range(result$curve)\npadding <- max(5, diff(ylim) / 2)\nylim <- c(floor((ylim[1] - padding) / 5) * 5,\n          ceiling((ylim[2] + padding) / 5) * 5)\nfor (g in c("a", "b")) {\n  d <- result[[g]]\n  idx <- seq_len(visible_n)\n  plot(d$x[idx], d$y[idx], xlim = c(0, 10), ylim = ylim,\n       xaxs = "i", yaxs = "i",\n       xlab = "Tutoring hours X", ylab = "Score Y", main = toupper(g),\n       pch = 16, col = adjustcolor("#1b6287", 0.4))\n  lines(result$grid, result$curve, col = "#437760", lwd = 2)\n  lines(result$grid, d$line, col = "#b65c3d", lwd = 2)\n  abline(lm(d$y[idx] ~ d$x[idx]), lty = 2, lwd = 2)\n}\n`;
-  download(`projection-seed-${current.seed}.R`,modelSource+appendix,'text/plain;charset=utf-8');
-}
-
 $('settings').addEventListener('submit', e=>e.preventDefault());
 for (const id of Object.keys(defaults)) $(id).addEventListener($(id).type === 'range' ? 'input' : 'change', changed);
 for (const id of ['n','seed']) $(id).addEventListener('input', changed);
@@ -324,7 +313,6 @@ $('play').addEventListener('click',play);
 $('show-all').addEventListener('click',()=>{ stopAnimation(); shown = current.n; renderSample(); });
 $('run-repeat').addEventListener('click',runRepeated);
 $('repetitions').addEventListener('change',()=>{ if (repeated) $('repeat-status').textContent = `${repeated.repetitions.toLocaleString('ja-JP')}回の結果を表示中です。新しい回数は実行時に反映します。`; });
-$('download-r').addEventListener('click',downloadR);
 $('retry').addEventListener('click',initialise);
 document.addEventListener('visibilitychange',()=>{ if (document.hidden) stopAnimation(); });
 setupResponsiveLayout();
