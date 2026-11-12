@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="標本変動，二種類の過誤，有意水準，t分布，p値をアニメーションで確かめる，計量経済学I・第6回のWeb教材。">
+  <meta name="theme-color" content="#005a85">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>アニメーションで見る仮説検定｜計量経済学I 第6回</title>
+  <link rel="stylesheet" href="assets/css/testing.css">
+  <script defer src="assets/js/testing-data.js"></script>
+  <script defer src="assets/js/testing-core.js"></script>
+  <script defer src="assets/js/testing-plots.js"></script>
+  <script defer src="assets/js/testing-app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<nav><a class="course" href="../">計量経済学I · 第6回</a><div>
+  <a href="#sampling">検定統計量</a><a href="#errors">二種類の過誤</a><a href="#student">t統計量と棄却率</a><a href="#pvalue">p値</a>
+</div></nav>
+<main id="main">
+<header><h1>アニメーションで見る仮説検定</h1></header>
+
+<section id="sampling" aria-labelledby="sampling-heading">
+  <h2 id="sampling-heading">帰無仮説の下での検定統計量の分布</h2>
+  <div class="model-line">
+    <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><mi>μ</mi><mo>=</mo><mn>45</mn></math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>Y</mi><mi>i</mi></msub><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>45</mn><mo>,</mo><msup><mn>10</mn><mn>2</mn></msup><mo>)</mo></math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Z</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><mn>10</mn><mo>/</mo><msqrt><mn>25</mn></msqrt></mrow></mfrac><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></math>
+  </div>
+  <div class="controls"><div class="playback">
+    <button id="sample-play" class="primary" type="button">再生</button>
+    <button id="sample-step" type="button">1回進める</button>
+    <button id="sample-reset" type="button">リセット</button>
+  </div>
+    <label class="field-inline" for="sample-speed">速度<select id="sample-speed"><option value="1">1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+    <label class="field-inline" for="sample-alpha">有意水準<select id="sample-alpha"><option value="0.05">5%</option><option value="0.01">1%</option></select></label>
+    <output class="counter" id="sample-count" aria-live="polite">0回</output>
+  </div>
+  <div class="legend"><span class="key orange">今回</span><span class="key blue">正規分布</span><span class="key pale">過去の試行</span></div>
+  <div class="three-plots sequence">
+    <article id="sample-panel"><h3>25人の標本</h3><canvas id="sample-points" role="img" aria-label="正規母集団から得られた25人の模擬標本"></canvas></article>
+    <article id="average-panel"><h3>標本平均</h3><canvas id="sample-average" role="img" aria-label="標本平均の正規分布と今回の標本平均"></canvas><output class="plot-value" id="sample-mean">標本平均 —</output></article>
+    <article id="statistic-panel"><h3>検定統計量Zの分布</h3><canvas id="sample-statistic" role="img" aria-label="各試行のZ統計量を集めたヒストグラム，標準正規分布，両側の棄却域"></canvas><output class="plot-value" id="sample-z">Z = —</output></article>
+  </div>
+  <div class="result-row"><output id="sample-result">誤って棄却 0 / 0 回</output><div class="playback"><button id="sample-batch" type="button">100回追加</button><button id="sample-restore" type="button">500回の結果</button></div></div>
+  <p id="sample-rule">棄却域：Z &lt; −1.960 または Z &gt; 1.960</p>
+</section>
+
+<section id="errors" aria-labelledby="errors-heading">
+  <h2 id="errors-heading">基準の厳しさと二種類の過誤</h2>
+  <div class="model-line"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><msub><mi>β</mi><mn>1</mn></msub><mo>,</mo><msup><mn>2</mn><mn>2</mn></msup><mo>)</mo></math></div>
+  <div class="controls error-controls">
+    <label class="range-field" for="error-boundary">推定された傾きの絶対値が <output id="boundary-value">4.0</output> を超えたら棄却<input id="error-boundary" type="range" min="2" max="8" step="0.05" value="4"></label>
+    <button id="error-play" class="primary" type="button">4から6へ動かす</button><button id="error-reset" type="button">4に戻す</button>
+  </div>
+  <div class="two-plots">
+    <article><h3>真の傾きが0の場合</h3><canvas id="error-one" role="img" aria-label="第一種の過誤となる左右の裾"></canvas><div class="error-result"><span>第一種の過誤：誤って棄却する</span><output id="error-one-value">4.6%</output></div></article>
+    <article><h3>真の傾きが5の場合</h3><canvas id="error-two" role="img" aria-label="第二種の過誤となる棄却しない範囲"></canvas><div class="error-result"><span>第二種の過誤：0でない傾きを見逃す</span><output id="error-two-value">30.9%</output></div></article>
+  </div>
+</section>
+
+<section id="student" aria-labelledby="student-heading">
+  <h2 id="student-heading">標準誤差を使ったt統計量</h2>
+  <p>母平均45・母標準偏差10の正規母集団から，独立な標本を繰り返し取る。帰無仮説が正しいので，ここでの棄却はすべて誤った棄却になる。</p>
+  <div class="model-line">
+    <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><mi>μ</mi><mo>=</mo><mn>45</mn></math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><msub><mi>μ</mi><mn>0</mn></msub></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac><mspace width="1em"/><msubsup><mi>s</mi><mi>Y</mi><mn>2</mn></msubsup><mo>=</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo>(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><mover><mi>Y</mi><mo>¯</mo></mover><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac></math>
+  </div>
+  <div class="controls"><div class="playback">
+    <button id="student-play" class="primary" type="button">再生</button><button id="student-step" type="button">1回進める</button><button id="student-reset" type="button">リセット</button>
+  </div><label class="field-inline" for="student-size">標本数<select id="student-size"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option></select></label><label class="field-inline" for="student-alpha">有意水準<select id="student-alpha"><option value="0.05">5%</option><option value="0.01">1%</option></select></label><output class="counter" id="student-count" aria-live="polite">0回</output></div>
+  <div class="three-plots sequence">
+    <article><h3>標本と標本平均</h3><canvas id="student-sample" role="img" aria-label="今回の標本と標本平均"></canvas><output class="plot-value" id="student-mean">標本平均 —</output></article>
+    <article><h3>標準誤差</h3><canvas id="student-scale" role="img" aria-label="既知の標準偏差を使った値と標本から推定した標準誤差"></canvas><output class="plot-value" id="student-se">s / √n = —</output></article>
+    <article><h3>t統計量の分布</h3><canvas id="student-density" role="img" aria-label="t統計量のヒストグラム，t分布と標準正規分布，それぞれの臨界値，t分布による棄却域"></canvas><output class="plot-value" id="student-df">自由度24</output></article>
+  </div>
+  <div class="legend"><span class="key blue">t分布・その臨界値</span><span class="key gray">標準正規分布・その臨界値</span><span class="key orange">今回の値</span><span class="key tail">t分布による棄却域</span></div>
+  <div class="result-row"><output id="student-critical">両側5%の臨界値：t分布 2.064　標準正規分布 1.960</output><div class="playback"><button id="student-batch" type="button">100回追加</button><button id="student-restore" type="button">10,000回の結果</button></div></div>
+  <h3 id="student-comparison-title">同じ標本で比べる誤って棄却した割合（有意水準5.0%）</h3>
+  <div class="rejection-comparison" aria-labelledby="student-comparison-title">
+    <article class="rejection-method" aria-labelledby="student-z-title">
+      <h4 id="student-z-title">Z統計量・正規分布</h4>
+      <p>母標準偏差10を使う</p>
+      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Z</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><mn>10</mn><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
+      <p class="rejection-rule" id="student-z-rule">棄却域：|Z| &gt; 1.960</p>
+      <output class="rejection-rate" id="student-z-rate" aria-label="Z統計量を正規分布で判定した棄却率">—</output>
+      <output class="rejection-count" id="student-z-count">誤って棄却 0 / 0 回</output>
+      <output class="rejection-theory" id="student-z-theory">理論上の棄却率 5.0%</output>
+    </article>
+    <article class="rejection-method normal-cutoff" aria-labelledby="student-t-normal-title">
+      <h4 id="student-t-normal-title">t統計量・正規分布</h4>
+      <p>標本から求めた標準誤差で割る</p>
+      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
+      <p class="rejection-rule" id="student-t-normal-rule">棄却域：|T| &gt; 1.960</p>
+      <output class="rejection-rate" id="student-t-normal-rate" aria-label="t統計量を正規分布で判定した棄却率">—</output>
+      <output class="rejection-count" id="student-t-normal-count">誤って棄却 0 / 0 回</output>
+      <output class="rejection-theory" id="student-t-normal-theory">理論上の棄却率 —</output>
+    </article>
+    <article class="rejection-method" aria-labelledby="student-t-title">
+      <h4 id="student-t-title">t統計量・t分布</h4>
+      <p>標本から求めた標準誤差で割る</p>
+      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
+      <p class="rejection-rule" id="student-t-rule">棄却域：|T| &gt; 2.064</p>
+      <output class="rejection-rate" id="student-t-rate" aria-label="t統計量をt分布で判定した棄却率">—</output>
+      <output class="rejection-count" id="student-t-count">誤って棄却 0 / 0 回</output>
+      <output class="rejection-theory" id="student-t-theory">理論上の棄却率 5.0%</output>
+    </article>
+  </div>
+  <p>標本から求めた標準誤差も試行ごとに変わるため，小標本のTはZより裾が厚い。Tに正規分布の臨界値を使うと，誤って棄却する割合が有意水準を上回る。t分布の臨界値を使うと，理論上の棄却率は有意水準と等しくなる。</p>
+</section>
+
+<section id="pvalue" aria-labelledby="pvalue-heading">
+  <h2 id="pvalue-heading">母平均の候補とp値</h2>
+  <div class="controls p-controls">
+    <label class="range-field" for="candidate">母平均の候補 <output id="candidate-value">45.0</output><input id="candidate" type="range" min="40" max="56" step="0.1" value="45"></label>
+    <button id="candidate-play" class="primary" type="button">45から50へ動かす</button><button id="candidate-reset" type="button">45に戻す</button>
+    <label class="field-inline" for="p-alpha">有意水準<select id="p-alpha"><option value="0.05">5%</option><option value="0.01">1%</option></select></label>
+  </div>
+  <div class="controls p-controls">
+    <label class="range-field" for="observed-mean">標本平均 <output id="observed-mean-value">48.98</output><input id="observed-mean" type="range" min="40" max="56" step="any" value="48.98438201651619"></label>
+    <button id="observed-mean-reset" type="button">標本平均を戻す</button>
+  </div>
+  <p class="p-sample-info"><span id="p-sample-summary">標本数25，標準誤差1.877を固定して，標本平均の位置を変える。</span><output id="p-statistic">T = —</output></p>
+  <div class="two-plots p-plots">
+    <article><h3>母平均の候補と標本平均</h3><canvas id="p-distance" role="img" aria-label="動かした標本平均と母平均の候補，両者の差"></canvas></article>
+    <article><h3>検定統計量の分布</h3><canvas id="p-tails" role="img" aria-label="自由度24のt分布と，p値に対応する左右の面積"></canvas></article>
+  </div>
+  <div class="decision-line"><output id="p-decision" aria-live="polite"><span id="p-comparison"></span><span>有意水準<span id="p-level">5.0%</span> では母平均の仮説 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>H</mi><mn>0</mn></msub><mo>:</mo><mi>μ</mi><mo>=</mo><mn id="p-null">45.0</mn></math> を<span id="p-verdict">棄却する。</span></span></output></div>
+</section>
+<footer>計量経済学I · 第6回 <a href="../index.html">教材一覧</a></footer>
+</main>
+<noscript>アニメーションの表示にはJavaScriptが必要です。</noscript>
+</body></html>
