@@ -1,0 +1,77 @@
+[
+  {
+    "file": "data/star_sample.csv",
+    "bytes": 144809,
+    "sha256": "dfd69b3d7a05624080018e945b22b4b519567032b0ccb7a569016a671a01ec8d"
+  },
+  {
+    "file": "data/oats_sample.csv",
+    "bytes": 6514,
+    "sha256": "35e4a56419f008323d1b6c8598ee9657b2ddf5683193f9afb3fa0a752f88a551"
+  },
+  {
+    "file": "data/inference_sample_examples.csv",
+    "bytes": 231620,
+    "sha256": "26e214d135be99384aa001af154f034f4302b3d3ee6fb0760c79befef8b3e0ee"
+  },
+  {
+    "file": "data/inference_replicates.csv",
+    "bytes": 1726242,
+    "sha256": "3bceba8a0112fa60672448b6973d0afd907049c08621f528df1c4bd1a62d7a60"
+  },
+  {
+    "file": "data/model_comparison_samples.csv",
+    "bytes": 906208,
+    "sha256": "9b1175a9bae673d2b06c4a7a09bac343d913f39796fc63b2aa05fbeaa4e3f083"
+  },
+  {
+    "file": "data/model_comparison_curves.csv",
+    "bytes": 2860728,
+    "sha256": "3f1d439952acff2ec90eb65986298063265eede22762a0a7daa8a8ad35648220"
+  },
+  {
+    "file": "data/simpson_sample.csv",
+    "bytes": 7380,
+    "sha256": "aee45d0f00257081f765ac07517f30810d57710e19446a4ad768af08db78a47e"
+  },
+  {
+    "file": "results/star_inference.csv",
+    "bytes": 175,
+    "sha256": "e1a12016a4444057650181f44ba8893d096020ae1c05c638750a2181e326ab83"
+  },
+  {
+    "file": "results/oats_inference.csv",
+    "bytes": 186,
+    "sha256": "59f18fb14abf5b5a190d50c091048a915af83fc17fa465218b3b91788fe797bf"
+  },
+  {
+    "file": "results/model_comparison_pointwise.csv",
+    "bytes": 267596,
+    "sha256": "660d9557d907b9f0cd6bddfe3979fe31cf51ad720ecde940da7a5bf0c6be6965"
+  },
+  {
+    "file": "results/model_local_changes.csv",
+    "bytes": 888228,
+    "sha256": "fee07e2b753a195e7c82afd903b6b7aba1dee1e1da6efbe9ae12c4b4d7f714e5"
+  },
+  {
+    "file": "results/inference_coverage.csv",
+    "bytes": 239,
+    "sha256": "fe29ab3f9156be7ce3c12992352e59d3582d9288bbd9a90ed537f5ee3d20b7f1"
+  },
+  {
+    "file": "results/inference_observed.csv",
+    "bytes": 191,
+    "sha256": "9ad9b708d01f7022e3df264095f3af6323d37820ea89bd3df57f8107461cf7db"
+  },
+  {
+    "file": "results/simpson_slopes.csv",
+    "bytes": 134,
+    "sha256": "46edb6cd358007837a58a1322a985be82388ed903acc62b6e0e007348a2cd635"
+  },
+  {
+    "file": "results/model_cost_changes.csv",
+    "bytes": 334112,
+    "sha256": "d6eacca05f42f8764ae8ed082b16e553ac441f0433ba38dde0e8985dc05fdab8"
+  }
+]
