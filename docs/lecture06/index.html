@@ -72,41 +72,32 @@
   <div class="three-plots sequence">
     <article><h3>標本と標本平均</h3><canvas id="student-sample" role="img" aria-label="今回の標本と標本平均"></canvas><output class="plot-value" id="student-mean">標本平均 —</output></article>
     <article><h3>標準誤差</h3><canvas id="student-scale" role="img" aria-label="既知の標準偏差を使った値と標本から推定した標準誤差"></canvas><output class="plot-value" id="student-se">s / √n = —</output></article>
-    <article><h3>t統計量の分布</h3><canvas id="student-density" role="img" aria-label="t統計量のヒストグラム，t分布と標準正規分布，それぞれの臨界値，t分布による棄却域"></canvas><output class="plot-value" id="student-df">自由度24</output></article>
+    <article><h3>t統計量の分布</h3><canvas id="student-density" role="img" aria-label="t統計量のヒストグラム，t分布と標準正規分布，両方の判定に使うt分布の臨界値"></canvas><output class="plot-value" id="student-df">自由度24</output></article>
   </div>
-  <div class="legend"><span class="key blue">t分布・その臨界値</span><span class="key gray">標準正規分布・その臨界値</span><span class="key orange">今回の値</span><span class="key tail">t分布による棄却域</span></div>
-  <div class="result-row"><output id="student-critical">両側5%の臨界値：t分布 2.064　標準正規分布 1.960</output><div class="playback"><button id="student-batch" type="button">100回追加</button><button id="student-restore" type="button">10,000回の結果</button></div></div>
+  <div class="legend"><span class="key blue">t分布・共通の臨界値</span><span class="key gray">標準正規分布（Zの分布）</span><span class="key orange">今回の値</span><span class="key tail">t分布による棄却域</span></div>
+  <div class="result-row"><output id="student-critical">両側5%の共通の臨界値：自由度24のt分布 ±2.064</output><div class="playback"><button id="student-batch" type="button">100回追加</button><button id="student-restore" type="button">10,000回の結果</button></div></div>
   <h3 id="student-comparison-title">同じ標本で比べる誤って棄却した割合（有意水準5.0%）</h3>
   <div class="rejection-comparison" aria-labelledby="student-comparison-title">
     <article class="rejection-method" aria-labelledby="student-z-title">
-      <h4 id="student-z-title">Z統計量・正規分布</h4>
+      <h4 id="student-z-title">Z統計量・t分布</h4>
       <p>母標準偏差10を使う</p>
-      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Z</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><mn>10</mn><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
-      <p class="rejection-rule" id="student-z-rule">棄却域：|Z| &gt; 1.960</p>
-      <output class="rejection-rate" id="student-z-rate" aria-label="Z統計量を正規分布で判定した棄却率">—</output>
+      <div class="rejection-formula"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Z</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><mn>10</mn><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math></div>
+      <p class="rejection-rule" id="student-z-rule">棄却域：|Z| &gt; 2.064</p>
+      <output class="rejection-rate" id="student-z-rate" aria-label="Z統計量をt分布で判定した棄却率">—</output>
       <output class="rejection-count" id="student-z-count">誤って棄却 0 / 0 回</output>
-      <output class="rejection-theory" id="student-z-theory">理論上の棄却率 5.0%</output>
-    </article>
-    <article class="rejection-method normal-cutoff" aria-labelledby="student-t-normal-title">
-      <h4 id="student-t-normal-title">t統計量・正規分布</h4>
-      <p>標本から求めた標準誤差で割る</p>
-      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
-      <p class="rejection-rule" id="student-t-normal-rule">棄却域：|T| &gt; 1.960</p>
-      <output class="rejection-rate" id="student-t-normal-rate" aria-label="t統計量を正規分布で判定した棄却率">—</output>
-      <output class="rejection-count" id="student-t-normal-count">誤って棄却 0 / 0 回</output>
-      <output class="rejection-theory" id="student-t-normal-theory">理論上の棄却率 —</output>
+      <output class="rejection-theory" id="student-z-theory">理論上の棄却率 —</output>
     </article>
     <article class="rejection-method" aria-labelledby="student-t-title">
       <h4 id="student-t-title">t統計量・t分布</h4>
       <p>標本から求めた標準誤差で割る</p>
-      <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math>
+      <div class="rejection-formula"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>T</mi><mo>=</mo><mfrac><mrow><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mn>45</mn></mrow><mrow><msub><mi>s</mi><mi>Y</mi></msub><mo>/</mo><msqrt><mi>n</mi></msqrt></mrow></mfrac></math></div>
       <p class="rejection-rule" id="student-t-rule">棄却域：|T| &gt; 2.064</p>
       <output class="rejection-rate" id="student-t-rate" aria-label="t統計量をt分布で判定した棄却率">—</output>
       <output class="rejection-count" id="student-t-count">誤って棄却 0 / 0 回</output>
       <output class="rejection-theory" id="student-t-theory">理論上の棄却率 5.0%</output>
     </article>
   </div>
-  <p>標本から求めた標準誤差も試行ごとに変わるため，小標本のTはZより裾が厚い。Tに正規分布の臨界値を使うと，誤って棄却する割合が有意水準を上回る。t分布の臨界値を使うと，理論上の棄却率は有意水準と等しくなる。</p>
+  <p>両方に自由度n − 1のt分布の同じ臨界値を使う。Zは標準正規分布に従い，Tより裾が薄いため，共通の臨界値を超える割合が小さい。標準誤差を使ったTでは，理論上の棄却率は有意水準と等しくなる。</p>
 </section>
 
 <section id="pvalue" aria-labelledby="pvalue-heading">

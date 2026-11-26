@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="第2回の線形射影から，OLS推定量の分布，正規近似，信頼区間へ。同じ標本を使って図のつながりを確かめる第8回の教材。">
+  <meta name="theme-color" content="#005a85">
+  <title>推定量の分布から信頼区間へ｜計量経済学I 第8回</title>
+  <link rel="stylesheet" href="assets/inference.css">
+  <script defer src="assets/inference-core.js"></script>
+  <script defer src="assets/inference-plots.js"></script>
+  <script defer src="assets/inference-app.js"></script>
+</head>
+<body>
+<div class="course-header"><span class="course">計量経済学I · 第8回</span></div>
+<main id="main">
+  <header>
+    <h1>推定量の分布から信頼区間へ</h1>
+    <p>第2回では，曲線を近似する母集団の直線と，標本から推定した直線を比べた。今回は同じ平均曲線を使い，標本ごとの傾きのばらつきから，線形射影係数の信頼区間を作る。</p>
+  </header>
+  <div class="settings" aria-label="すべての図に共通する設定">
+    <label for="population">補習時間の分布<select id="population"><option value="uniform">0〜10時間で一様</option><option value="short">短時間に多い</option><option value="long">長時間に多い</option></select></label>
+    <label for="sample-size">標本サイズ<select id="sample-size"><option value="40">40人</option><option value="240" selected>240人</option><option value="960">960人</option></select></label>
+    <label for="confidence">信頼水準<select id="confidence"><option value="0.9">90%</option><option value="0.95" selected>95%</option><option value="0.99">99%</option></select></label>
+  </div>
+  <section id="sampling" aria-labelledby="sampling-title">
+    <h2 id="sampling-title">標本を取り直すと，傾きはどこに集まるか</h2>
+    <p>補習時間を <i>X</i>，得点を <i>Y</i> とする。補習時間 <i>x</i> での平均得点 <i>m</i>(<i>x</i>) は曲線である。母集団の線形射影を <i>L</i>(<i>x</i>) とする。平均得点の周りに，<i>X</i> と独立な，平均0・標準偏差10の右に歪んだ誤差を加え，毎回 <i>X</i> と <i>Y</i> の組を独立に取り直す。</p>
+    <div class="model-line"><span class="math">m(x) = 60 + 6x − 0.3x²</span><span class="math" id="projection-equation">L(x) = 65 + 3x</span></div>
+    <div class="controls">
+      <div class="playback"><button id="sampling-play" class="primary" type="button">再生</button><button id="sampling-step" type="button">1回進める</button><button id="sampling-reset" type="button">リセット</button></div>
+      <label class="inline-field" for="speed">速度<select id="speed"><option value="1">1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+      <output id="sample-count" class="counter" aria-live="polite">1回</output>
+    </div>
+    <div class="legend"><span class="key curve">条件付き期待値</span><span class="key population">母集団の線形射影</span><span class="key estimate">今回のOLS</span></div>
+    <div class="three-plots sequence">
+      <article id="scatter-panel"><h3>標本と回帰直線</h3><canvas id="sample-scatter" role="img" aria-label="今回の標本の散布図，条件付き期待値，線形射影，OLSの回帰直線"></canvas><output id="sample-estimate" class="plot-value"></output></article>
+      <article id="slope-panel"><h3>集めた傾きの分布</h3><canvas id="slope-distribution" role="img" aria-label="OLSの傾きのヒストグラムと，線形射影係数を中心とする正規近似"></canvas><output id="slope-summary" class="plot-value"></output></article>
+      <article id="z-panel"><h3>標準化した推定誤差</h3><canvas id="z-distribution" role="img" aria-label="標準化した推定誤差のヒストグラムと標準正規分布"></canvas><output id="z-value" class="plot-value"></output></article>
+    </div>
+    <div class="result-row"><p>各標本から，傾きと標準化した推定誤差を一つずつ集める。青の曲線は正規近似である。</p><div class="playback"><button id="sampling-batch" type="button">100回追加</button><button id="sampling-all" type="button">5,000回の結果</button></div></div>
+    <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Z</mi><mo>=</mo><mfrac><mrow><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>−</mo><msub><mi>β</mi><mn>1</mn></msub></mrow><mrow><mi mathvariant="normal">se</mi><mo>(</mo><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo></mrow></mfrac><mover><mo>∼</mo><mtext>近似</mtext></mover><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></math></div>
+    <p>標本から計算する標準誤差 se は，推定量のばらつきの見積もりである。この母集団では，標本が大きくなると，標準化した推定誤差の分布が標準正規分布に近づく。</p>
+  </section>
+  <section id="construction" aria-labelledby="construction-title">
+    <h2 id="construction-title">棄却されない候補を集めて，信頼区間へ</h2>
+    <p>第7回と同じように，母集団の傾きの候補 <span class="math">b₀</span> ごとに，帰無仮説 <span class="math">H₀: β₁ = b₀</span> を検定する。同じ標本のまま，推定値と標準誤差を固定し，候補だけを左から右へ動かす。</p>
+    <p id="construction-intro">今回は標準正規分布による近似を使う。有意水準5%の両側検定では，検定統計量の絶対値が1.960を超える候補を棄却する。</p>
+    <div class="model-line" id="construction-fixed"></div>
+    <div class="controls"><div class="playback"><button id="construction-play" type="button" class="primary">候補を動かす</button><button id="construction-prev" type="button">戻る</button><button id="construction-next" type="button">次へ</button><button id="construction-reset" type="button">最初へ</button></div><output id="construction-step" class="counter" aria-live="polite">1 / 6</output></div>
+    <label class="candidate-selector" for="candidate"><span>候補 <span class="math">b₀</span> <output id="candidate-value"></output></span><input id="candidate" type="range" min="0" max="4000" step="1" value="0" aria-label="検定する傾きの候補"></label>
+    <div class="two-plots candidate-plots">
+      <article><h3>候補を帰無仮説として検定</h3><canvas id="normal-range" role="img" aria-label="帰無仮説の下での標準正規近似，両側の棄却域，候補に対する検定統計量"></canvas><output id="candidate-test" class="plot-value"></output></article>
+      <article><h3>候補ごとの検定結果</h3><canvas id="constructed-interval" role="img" aria-label="候補ごとの検定統計量の絶対値と臨界値，棄却されない候補を集めた区間"></canvas><output id="candidate-set" class="plot-value"></output></article>
+    </div>
+    <div id="construction-formula" class="equation formula-stage" aria-live="polite"></div>
+    <p id="construction-caption" class="construction-caption"></p>
+    <p>棄却されない候補をすべて集めた範囲が，傾きの信頼区間である。次に，標本を取り直して区間を作り，母集団の傾きがその区間に含まれるかを調べる。</p>
+  </section>
+  <section id="coverage" aria-labelledby="coverage-title">
+    <h2 id="coverage-title">標本ごとの信頼区間と，母集団の傾き</h2>
+    <p>上で集めた標本から，一つずつ信頼区間を作る。母集団の線形射影は，真の条件付き期待値を直線で近似したものである。右図の横線がその傾きの信頼区間，点が推定値である。破線の位置は母集団の傾きで，標本を取り直しても変わらない。</p>
+    <div class="controls"><div class="playback"><button id="coverage-play" type="button" class="primary">区間を順に見る</button><button id="coverage-step" type="button">次の標本</button><button id="find-miss" type="button">含まない区間へ</button></div><output id="selected-label" class="counter" aria-live="polite"></output></div>
+    <label class="sample-selector" for="selected-sample">表示する標本<input id="selected-sample" type="range" min="1" max="1" value="1"></label>
+    <div class="two-plots coverage-plots">
+      <article><h3>真の条件付き期待値と傾きの範囲</h3><canvas id="interval-scatter" role="img" aria-label="緑の真の条件付き期待値と，青の母集団の線形射影，橙のOLS，標本の中心を通る紫の区間端点の傾き"></canvas><output id="selected-interval" class="plot-value"></output><div class="legend"><span class="key curve">真の条件付き期待値</span><span class="key population">母集団の線形射影</span><span class="key estimate">OLS</span></div><p class="plot-description">青の線形射影は，緑の曲線との二乗のずれを，補習時間の分布で平均した値が最小になる直線である。紫の2本は，標本の中心を通る，信頼区間の両端の傾きの直線である。</p></article>
+      <article><h3>繰り返し作った信頼区間</h3><canvas id="interval-history" role="img" aria-label="標本ごとの信頼区間と母集団の傾き。含まない区間は橙色で表示"></canvas><output id="history-window" class="plot-value"></output><div class="legend"><span class="key population">母集団の傾き</span><span class="key covered">含む区間</span><span class="key missed">含まない区間</span></div></article>
+    </div>
+    <div class="coverage-result"><output id="coverage-result" aria-live="polite"></output><span id="nominal-coverage"></span></div>
+    <p id="coverage-message" role="status"></p><p id="coverage-explanation"></p>
+  </section>
+  <details id="calculation"><summary>母集団と計算式</summary>
+    <p>平均曲線は第2回と共通である。第8回の設定に合わせ，誤差を <span class="math">U = 10(E − 1)</span>，<span class="math">E ∼ Exp(1)</span> とし，<i>X</i> と独立に生成する。<span class="math">Exp(1)</span> は平均1の指数分布である。得点は <span class="math">Y = m(X) + U</span> で生成する。</p>
+    <p>短時間・長時間に多い設定では，第2回と同じく，平均2・8，標準偏差3の正規分布を0〜10で切断する。母集団の線形射影係数は，選択した <i>X</i> の分布で期待値を計算して求める。</p>
+    <div class="equation"><span class="math">β₁ = Cov(X, m(X)) / Var(X)，　β₀ = E[m(X)] − β₁ E[X]</span></div>
+    <p>標準誤差は，第8回スライドと同じHC0を使う。各観測の回帰残差を ûᵢ = Yᵢ − β̂₀ − β̂₁Xᵢ，Sₓₓ = ∑ᵢ(Xᵢ − X̄)² とすると，次の式になる。</p>
+    <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">se</mi><mo>(</mo><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo><mo>=</mo><mfrac><msqrt><mrow><munder><mo>∑</mo><mi>i</mi></munder><msup><mrow><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo>−</mo><mover><mi>X</mi><mo>¯</mo></mover><mo>)</mo></mrow><mn>2</mn></msup><msubsup><mover><mi>u</mi><mo>^</mo></mover><mi>i</mi><mn>2</mn></msubsup></mrow></msqrt><msub><mi>S</mi><mrow><mi>X</mi><mi>X</mi></mrow></msub></mfrac></math></div>
+    <p>傾きの分布に重ねる青の正規曲線は，線形射影係数を中心とし，母集団のモーメントから求めた漸近分散を標本サイズで割った分散を使う。区間の幅には，各標本のHC0標準誤差を使う。</p>
+    <p>標本はブラウザー内で生成する。同じ設定では同じ標本列を再現し，信頼水準を変えたときは同じ標本から区間を計算し直す。分布・標本サイズを変えると1回目から始める。</p>
+  </details>
+  <noscript><p>図の描画と操作には，ブラウザーのJavaScriptを有効にする必要がある。</p></noscript>
+</main>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="正規回帰モデルのt検定から，棄却されない候補を集めて信頼区間を作る。標本ごとの被覆と区間幅を図で確かめる第7回講義のWeb教材。">
+  <meta name="theme-color" content="#005a85">
+  <title>仮説検定から信頼区間へ｜計量経済学I 第7回</title>
+  <link rel="stylesheet" href="assets/css/intervals.css">
+  <script defer src="assets/js/reference-data.js"></script>
+  <script defer src="assets/js/ci-core.js"></script>
+  <script defer src="assets/js/interval-core.js"></script>
+  <script defer src="assets/js/interval-plots.js"></script>
+  <script defer src="assets/js/interval-app.js"></script>
+</head>
+<body>
+<div class="course-header"><span class="course">計量経済学I · 第7回</span></div>
+<main id="main">
+  <header><h1>仮説検定から信頼区間へ</h1>
+    <p>回帰直線の傾きについて，一つの候補を検定する。同じ標本のまま候補を変え，棄却されない値をすべて集めると，傾きの信頼区間になる。</p>
+  </header>
+  <div class="settings">
+    <label>標本サイズ <i>n</i><select id="sample-size"><option value="10">10</option><option value="25">25</option><option value="100" selected>100</option><option value="400">400</option></select></label>
+    <label>信頼水準<select id="confidence"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+    <label>再生速度<select id="speed"><option value="1">1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+  </div>
+  <section id="regression" aria-labelledby="regression-title">
+    <h2 id="regression-title">回帰直線から，傾きの標準誤差へ</h2>
+    <p>説明変数 <i>X</i> を0〜4に等間隔で固定し，互いに独立な正規誤差を加えて標本を作る。真の条件付き期待値は直線 <span class="math">E[Y | X = x] = 2 + 1.5x</span>，誤差の標準偏差は <span class="math">σ = 1.5</span> である。</p>
+    <div class="model-line"><span class="math">Yᵢ = β₀ + β₁Xᵢ + Uᵢ</span><span class="math">Uᵢ ∼ N(0, σ²)</span></div>
+    <div class="controls"><div class="playback"><button id="sample-next" type="button">次の標本</button><button id="sample-reset" type="button">最初の標本へ</button></div><label class="inline-field">縦のずれ<select id="deviation"><option value="residual">OLS直線からの残差</option><option value="error">真の直線からの誤差</option><option value="none">表示しない</option></select></label><output id="sample-label" class="counter"></output></div>
+    <div class="two-plots regression-plots">
+      <article><h3>標本と二つの直線</h3><canvas id="regression-scatter" role="img" aria-label="固定したXの標本，真の条件付き期待値，OLS直線と縦のずれ"></canvas><div class="legend"><span class="key population">真の条件付き期待値</span><span class="key estimate">OLS</span></div><output id="fit-value" class="plot-value"></output></article>
+      <article class="se-explanation"><h3>残差から標準誤差を求める</h3>
+        <p>OLS直線からの残差を <span class="math">êᵢ = Yᵢ − β̂₀ − β̂₁Xᵢ</span> とする。切片と傾きを推定するので，残差の自由度は <span class="math">n − 2</span> となる。</p>
+        <div class="equation"><math><msubsup><mi>s</mi><mi>U</mi><mn>2</mn></msubsup><mo>=</mo><mfrac><mrow><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mover><mi>e</mi><mo>^</mo></mover><mi>i</mi><mn>2</mn></msubsup></mrow><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow></mfrac></math><math><mi mathvariant="normal">se</mi><mo>(</mo><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo><mo>=</mo><mfrac><msub><mi>s</mi><mi>U</mi></msub><msqrt><msub><mi>S</mi><mrow><mi>X</mi><mi>X</mi></mrow></msub></msqrt></mfrac></math></div>
+        <p><span class="math">Sₓₓ = ∑ᵢ(Xᵢ − X̄)²</span> は，<i>X</i> の標本平均からのずれの二乗和である。標本を取り直したときの傾きの標準偏差 <span class="math">σ / √Sₓₓ</span> を，標本から <span class="math">sᵤ / √Sₓₓ</span> で推定する。</p>
+        <output id="se-values" class="numeric-values"></output>
+      </article>
+    </div>
+    <p>傾きの候補を <span class="math">b₀</span> とし，帰無仮説 <span class="math">H₀: β₁ = b₀</span> を両側検定する。候補と推定値の差を標準誤差で割った統計量 <span class="math">T(b₀)</span> は，帰無仮説の下で自由度 <span class="math">n − 2</span> の <i>t</i> 分布に従う。</p>
+    <div class="equation"><math><mrow><mi>T</mi><mo>(</mo><msub><mi>b</mi><mn>0</mn></msub><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>−</mo><msub><mi>b</mi><mn>0</mn></msub></mrow><mrow><mi mathvariant="normal">se</mi><mo>(</mo><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>)</mo></mrow></mfrac></math></div>
+    <p id="two-tests-intro"></p>
+    <div class="table-scroll"><table><thead><tr><th>候補 b₀</th><th>t値</th><th>p値</th><th>検定結果</th></tr></thead><tbody id="two-tests"></tbody></table></div>
+  </section>
+  <section id="construction" aria-labelledby="construction-title">
+    <h2 id="construction-title">棄却されない候補を集めて，信頼区間へ</h2>
+    <p>同じ標本のまま，推定値と標準誤差を固定し，候補だけを左から右へ動かす。検定統計量の絶対値が臨界値 <i>c</i> 以下となる候補を，右図の下に青で残していく。</p>
+    <p id="construction-intro"></p><div id="construction-fixed" class="model-line"></div>
+    <div class="controls"><div class="playback"><button id="construction-play" type="button" class="primary">候補を動かす</button><button id="construction-prev" type="button">戻る</button><button id="construction-next" type="button">次へ</button><button id="construction-reset" type="button">最初へ</button></div><output id="construction-step" class="counter" aria-live="polite"></output></div>
+    <label class="candidate-selector" for="candidate"><span>候補 <span class="math">b₀</span><output id="candidate-value"></output></span><input id="candidate" type="range" min="0" max="4000" step="1" value="0" aria-label="検定する傾きの候補"></label>
+    <div class="two-plots candidate-plots">
+      <article><h3>帰無仮説の下での t 分布と棄却域</h3><canvas id="null-distribution" role="img" aria-label="自由度n−2のt分布，両側の棄却域と候補に対する検定統計量"></canvas><output id="candidate-test" class="plot-value"></output></article>
+      <article><div class="plot-heading"><h3>候補ごとの検定結果</h3><label><select id="candidate-view" aria-label="候補ごとの検定結果の表示"><option value="statistic">t値の絶対値</option><option value="pvalue">p値</option></select></label></div><canvas id="candidate-results" role="img" aria-label="候補ごとの検定結果と，棄却されない候補を集めた区間"></canvas><output id="candidate-set" class="plot-value"></output></article>
+    </div>
+    <div id="construction-formula" class="equation formula-stage" aria-live="polite"></div>
+    <p id="construction-caption" class="construction-caption"></p>
+    <p id="pvalue-explanation"></p>
+  </section>
+  <section id="coverage" aria-labelledby="coverage-title">
+    <h2 id="coverage-title">標本ごとの検定と，信頼区間</h2>
+    <p>真の傾き1.5を固定し，標本を取り直す。各行は一つの標本である。左図で候補1.5を棄却しないことと，右図で信頼区間が1.5を含むことは，同じ条件を表す。</p>
+    <div class="controls"><div class="playback"><button id="coverage-play" type="button" class="primary">標本を取り直す</button><button id="coverage-step" type="button">次の標本</button><button id="coverage-batch" type="button">100回追加</button><button id="coverage-all" type="button">5,000回の結果</button><button id="find-miss" type="button">含まない区間へ</button></div><output id="selected-label" class="counter"></output></div>
+    <label class="sample-selector" for="selected-sample">表示する標本<input id="selected-sample" type="range" min="1" max="1" value="1"></label>
+    <div class="two-plots coverage-plots">
+      <article><h3>真の傾き1.5を検定する</h3><canvas id="test-history" role="img" aria-label="標本ごとのt値と正負の臨界値。棄却した標本を橙で表示"></canvas><output id="selected-test" class="plot-value"></output></article>
+      <article><h3>棄却されない傾きの区間</h3><canvas id="interval-history" role="img" aria-label="同じ標本の信頼区間と真の傾き1.5。含まない標本を橙で表示"></canvas><output id="selected-interval" class="plot-value"></output></article>
+    </div>
+    <div class="legend"><span class="key covered">棄却しない・区間が含む</span><span class="key missed">棄却する・区間が含まない</span></div>
+    <div class="coverage-result"><output id="coverage-result" aria-live="polite"></output><span id="coverage-count"></span></div>
+    <p id="coverage-message" role="status"></p><p id="coverage-explanation"></p>
+    <div class="equation"><span class="math">β₁ ∈ C(D)</span><span>⇔</span><span class="math">|T(β₁)| ≤ c</span></div>
+    <p id="coverage-definition"></p>
+  </section>
+  <section id="width" aria-labelledby="width-title">
+    <h2 id="width-title">区間の幅を変えるもの</h2>
+    <p>ここでは傾きの推定値を1.5にそろえた比較用の標本を使う。区間の端から端までの幅は <span class="math">2c × sᵤ / √Sₓₓ</span> である。一つの条件を変え，同じ軸で区間幅を比べる。</p>
+    <div class="controls"><label class="inline-field">変える条件<select id="width-mode"><option value="n">標本サイズ</option><option value="noise">残差のばらつき</option><option value="spread">Xのばらつき</option><option value="level">信頼水準</option></select></label><button id="width-play" type="button">変化を再生</button><button id="width-reset" type="button">最初へ</button></div>
+    <label class="candidate-selector" for="width-value"><span id="width-label"></span><input id="width-value" type="range" min="1" max="4" step="1" value="1"></label>
+    <div class="two-plots width-plots"><article><h3 id="width-before-title">比較の基準</h3><canvas id="width-before" role="img" aria-label="比較の基準となる散布図と信頼区間"></canvas><output id="width-before-values" class="numeric-values"></output></article><article><h3 id="width-after-title">条件を変えた標本</h3><canvas id="width-after" role="img" aria-label="条件を変えた散布図と信頼区間。基準と共通の軸"></canvas><output id="width-after-values" class="numeric-values"></output></article></div>
+    <div class="legend"><span class="key estimate">OLS</span><span class="key population">区間の両端の傾き</span></div>
+    <p id="width-explanation" class="construction-caption"></p>
+  </section>
+  <section id="effect" aria-labelledby="effect-title">
+    <h2 id="effect-title">有意かどうかと，効果の大きさ</h2>
+    <p>補習を1時間増やしたときの得点の変化を考える。講義の数値例では，傾きの推定値0.01点，残差の標準偏差0.2，<span class="math">Sₓₓ / n = 1</span> をそろえ，標本サイズだけを100人と10,000人に変える。</p>
+    <div class="two-plots effect-plots"><article><h3>同じ0.01点を，0と比べる</h3><canvas id="effect-intervals" role="img" aria-label="100人と10000人の95%信頼区間を共通の尺度で比較"></canvas><label class="inline-field"><input id="effect-full" type="checkbox">分析者の基準1点まで表示</label></article><article><h3>95%信頼区間に残る範囲</h3><div class="table-scroll"><table><thead><tr><th>人数</th><th>標準誤差</th><th>t値</th><th>95%区間</th></tr></thead><tbody id="effect-values"></tbody></table></div><p>100人の区間は0を含み，10,000人の区間は0を含まない。10,000人の例で候補に残る効果は，約0.006〜0.014点である。</p><p>分析者が補習1時間当たり1点以上を実質的に大きい効果と考える場合，この区間の上端も1点を下回る。効果の大きさは，区間を分析者の基準と比べて判断する。</p></article></div>
+  </section>
+  <details id="calculation"><summary>モデルと計算の対応</summary>
+    <p>正規回帰モデルでは，傾きの推定量は <span class="math">N(β₁, σ² / Sₓₓ)</span> に従う。未知の <span class="math">σ</span> を残差から求めた <span class="math">sᵤ</span> に置き換えた統計量は，帰無仮説の下で自由度 <span class="math">n − 2</span> の <i>t</i> 分布に従う。ここではこの分布の分位点を臨界値に使う。</p>
+    <p><span class="math">n = 100</span> の最初の標本は講義スライドと共通である。その後は，同じ <i>X</i> を保って誤差を生成する。信頼水準を変えたときは同じ標本を使い，標本サイズを変えたときは最初の標本から始める。</p>
+    <p>区間幅の比較では，切片2・傾き1.5の直線に直交する残差を用いる。標本サイズの比較は <span class="math">sᵤ</span> と <span class="math">Sₓₓ / n</span>，残差の比較は <i>X</i>，<i>X</i> の比較は観測数と残差をそろえる。各図の端点の傾きは，標本の中心を通る直線として描く。</p>
+  </details>
+  <noscript><p>図の描画と操作には，ブラウザーのJavaScriptを有効にする必要がある。</p></noscript>
+</main>
+</body>
+</html>

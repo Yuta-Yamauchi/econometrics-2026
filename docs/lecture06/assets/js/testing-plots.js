@@ -74,10 +74,9 @@
     stats.forEach(v=>{const k=Math.floor((v+6)/.4);if(k>=0&&k<30)counts[k]++;});
     const ymax=Math.max(.47,1.08*Math.max(...counts)/Math.max(1,stats.length)/.4);
     s=chart('student-density',[-6,6],[0,ymax],{xt:[-6,-3,0,3,6],yt:[0,.2,.4],xlab:'T',ylab:'密度'});
-    const zc=C.critical(alpha),tc=C.critical(alpha,df),f=x=>C.tPdf(x,df);
+    const tc=C.critical(alpha,df),f=x=>C.tPdf(x,df);
     shade(s,f,-6,-tc);shade(s,f,tc,6);
     histogram(s,stats);curve(s,C.pdf,gray,[4,4]);curve(s,f);
-    [-zc,zc].forEach(v=>vertical(s,v,gray,ymax*.78,[3,4]));
     [-tc,tc].forEach(v=>vertical(s,v,blue,ymax*.90,[6,3]));
     if(progress>=.7)vertical(s,(sample.mean-45)/sample.se,orange,.36*Math.min(1,(progress-.7)/.2));
   }

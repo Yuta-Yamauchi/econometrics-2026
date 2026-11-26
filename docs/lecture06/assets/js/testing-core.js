@@ -15,16 +15,15 @@
   function errors(c){return{one:2*cdf(-c/2),two:cdf((c-5)/2)-cdf((-c-5)/2)};}
   function test(y,candidate){const m=moments(y),t=(m.mean-candidate)/m.se;return{...m,candidate,t,p:tP(t,m.n-1)};}
   function rejectionRates(samples,n,alpha=.05){
-    const zCritical=critical(alpha),tCritical=critical(alpha,n-1);
-    const counts={z:0,tNormal:0,t:0};
+    const tCritical=critical(alpha,n-1);
+    const counts={z:0,t:0};
     for(const s of samples){
       const z=(s.mean-45)/(10/Math.sqrt(n)),t=(s.mean-45)/s.se;
-      if(Math.abs(z)>zCritical)counts.z++;
-      if(Math.abs(t)>zCritical)counts.tNormal++;
+      if(Math.abs(z)>tCritical)counts.z++;
       if(Math.abs(t)>tCritical)counts.t++;
     }
-    const total=samples.length,theory={z:2*cdf(-zCritical),tNormal:tP(zCritical,n-1),t:tP(tCritical,n-1)};
-    return{total,n,alpha,zCritical,tCritical,...Object.fromEntries(Object.entries(counts).map(([key,count])=>[key,{count,rate:total?count/total:null,theory:theory[key]}]))};
+    const total=samples.length,theory={z:2*cdf(-tCritical),t:tP(tCritical,n-1)};
+    return{total,n,alpha,tCritical,...Object.fromEntries(Object.entries(counts).map(([key,count])=>[key,{count,rate:total?count/total:null,theory:theory[key]}]))};
   }
   const api={rng,normal,moments,sample,pdf,cdf,tPdf,tP,critical,errors,test,rejectionRates};
   root.TestingCore=api;if(typeof module!=='undefined')module.exports=api;

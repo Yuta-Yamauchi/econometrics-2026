@@ -5,6 +5,7 @@
   const motions=[];
   const stopAll=()=>motions.forEach(m=>m.pause());
   const pct=p=>(100*p).toFixed(1)+'%';
+  const ratePct=p=>p>0&&p<.001?(100*p).toPrecision(2)+'%':pct(p);
   class ValueMotion{
     constructor(button,from,to,duration,paint,label){Object.assign(this,{button,from,to,duration,paint,label,value:from,progress:0,running:false,raf:null});motions.push(this);button.addEventListener('click',()=>this.toggle());}
     pause(){this.running=false;if(this.raf!==null)cancelAnimationFrame(this.raf);this.raf=null;this.button.textContent=this.label;}
@@ -53,14 +54,14 @@
     $('student-se').textContent=p>=.62?'s / √n = '+m.se.toFixed(3):'s / √n = —';
     $('student-df').textContent='自由度'+(m.n-1)+(p>=.7?'　T = '+((m.mean-45)/m.se).toFixed(3):'');
     studentRates=C.rejectionRates(state.history,m.n,studentAlpha);
-    const zc=studentRates.zCritical.toFixed(3),tc=studentRates.tCritical.toFixed(3);
-    $('student-critical').textContent='両側'+pct(studentAlpha)+'の臨界値：t分布 '+tc+'　標準正規分布 '+zc;
-    for(const [id,key,stat,cutoff] of [['z','z','Z',zc],['t-normal','tNormal','T',zc],['t','t','T',tc]]){
+    const tc=studentRates.tCritical.toFixed(3);
+    $('student-critical').textContent='両側'+pct(studentAlpha)+'の共通の臨界値：自由度'+(m.n-1)+'のt分布 ±'+tc;
+    for(const [id,key,stat] of [['z','z','Z'],['t','t','T']]){
       const result=studentRates[key];
-      $('student-'+id+'-rule').textContent='棄却域：|'+stat+'| > '+cutoff;
-      $('student-'+id+'-rate').textContent=result.rate===null?'—':pct(result.rate);
+      $('student-'+id+'-rule').textContent='棄却域：|'+stat+'| > '+tc;
+      $('student-'+id+'-rate').textContent=result.rate===null?'—':ratePct(result.rate);
       $('student-'+id+'-count').textContent='誤って棄却 '+result.count.toLocaleString()+' / '+studentRates.total.toLocaleString()+' 回';
-      $('student-'+id+'-theory').textContent='理論上の棄却率 '+pct(result.theory);
+      $('student-'+id+'-theory').textContent='理論上の棄却率 '+ratePct(result.theory);
     }
     $('student-comparison-title').textContent='同じ標本で比べる誤って棄却した割合（有意水準'+pct(studentAlpha)+'）';
   });

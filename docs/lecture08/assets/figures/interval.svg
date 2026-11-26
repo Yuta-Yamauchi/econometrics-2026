@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="一つの標本から95パーセント信頼区間へ">
+<defs><clipPath id="plot-clip"><rect x="84" y="46" width="764" height="386"/></clipPath></defs>
+<path d="M84.00 46.00 L84.00 432.00" fill="none" stroke="#b5bfc4" stroke-width="1.5"  />
+<path d="M84.00 432.00 L848.00 432.00" fill="none" stroke="#b5bfc4" stroke-width="1.5"  />
+<path d="M145.12 432.00 L145.12 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="145.12" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >2</text>
+<path d="M297.92 432.00 L297.92 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="297.92" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >2.5</text>
+<path d="M450.72 432.00 L450.72 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="450.72" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >3</text>
+<path d="M603.52 432.00 L603.52 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="603.52" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >3.5</text>
+<path d="M756.32 432.00 L756.32 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="756.32" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >4</text>
+<text x="466.00" y="507.00" font-size="22" fill="#20313b" text-anchor="middle" >線形射影係数の候補 b</text>
+<text x="84.00" y="26.00" font-size="22" fill="#20313b" text-anchor="start" ></text>
+<g data-layer="estimate">
+<circle cx="489.70" cy="219.70" r="9" fill="#08658a" />
+<text x="489.70" y="179.70" font-size="30" fill="#08658a" text-anchor="middle" >3.128</text>
+</g>
+<g data-layer="se">
+<path d="M489.70 219.70 L561.32 219.70" fill="none" stroke="#287451" stroke-width="6"  data-draw="true"/>
+<text x="525.51" y="275.70" font-size="25" fill="#287451" text-anchor="middle" >1 SE</text>
+</g>
+<g data-layer="interval">
+<path d="M349.32 219.70 L489.70 219.70" fill="none" stroke="#08658a" stroke-width="7"  data-draw="true"/>
+<path d="M489.70 219.70 L630.08 219.70" fill="none" stroke="#08658a" stroke-width="7"  data-draw="true"/>
+<path d="M349.32 204.70 L349.32 234.70" fill="none" stroke="#08658a" stroke-width="3"  />
+<text x="349.32" y="271.70" font-size="26" fill="#08658a" text-anchor="middle" >2.668</text>
+<path d="M630.08 204.70 L630.08 234.70" fill="none" stroke="#08658a" stroke-width="3"  />
+<text x="630.08" y="271.70" font-size="26" fill="#08658a" text-anchor="middle" >3.587</text>
+</g>
+<g data-layer="candidate">
+<path d="M450.72 46.00 L450.72 432.00" fill="none" stroke="#bd5227" stroke-width="2.5" stroke-dasharray="7 6" id="candidate-line" data-shift="305.60"/>
+<text x="450.72" y="91.00" font-size="27" fill="#bd5227" text-anchor="middle" id="candidate-label" data-shift="305.60">候補 3</text>
+</g>
+<g class="board-mark" data-layer="mark-center">
+<path d="M508.72 213.96 L509.13 215.25 L509.47 216.57 L509.71 217.91 L509.86 219.28 L509.90 220.66 L509.83 222.05 L509.66 223.42 L509.39 224.77 L509.02 226.10 L508.56 227.40 L508.02 228.66 L507.39 229.87 L506.70 231.05 L505.95 232.17 L505.13 233.24 L504.25 234.26 L503.32 235.22 L502.33 236.12 L501.28 236.95 L500.19 237.70 L499.04 238.36 L497.86 238.94 L496.64 239.42 L495.39 239.80 L494.12 240.09 L492.83 240.27 L491.55 240.37 L490.26 240.38 L488.98 240.32 L487.71 240.18 L486.45 239.98 L485.20 239.72 L483.96 239.40 L482.73 239.02 L481.52 238.58 L480.32 238.07 L479.14 237.50 L477.99 236.84 L476.88 236.10 L475.82 235.27 L474.82 234.35 L473.90 233.34 L473.06 232.25 L472.32 231.09 L471.68 229.86 L471.13 228.59 L470.69 227.27 L470.35 225.93 L470.11 224.57 L469.95 223.21 L469.86 221.84 L469.85 220.48 L469.91 219.12 L470.03 217.78 L470.22 216.44 L470.47 215.12 L470.78 213.81 L471.16 212.52 L471.62 211.26 L472.15 210.03 L472.76 208.84 L473.45 207.69 L474.22 206.59 L475.05 205.56 L475.96 204.58 L476.92 203.68 L477.94 202.84 L479.01 202.07 L480.12 201.37 L481.27 200.73 L482.45 200.16 L483.66 199.66 L484.90 199.24 L486.17 198.88 L487.46 198.61 L488.76 198.43 L490.08 198.35 L491.41 198.37 L492.73 198.51 L494.04 198.76 L495.32 199.12 L496.57 199.60 L497.77 200.18 L498.92 200.86 L500.01 201.63 L501.04 202.47 L502.01 203.38 L502.92 204.34 L503.78 205.34 L504.59 206.38 L505.35 207.45 L506.07 208.55 L506.74 209.68 L507.37 210.84 L507.95 212.04 L508.47 213.27 L508.92 214.54 L509.30 215.85 L509.59 217.18" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+<g class="board-mark" data-layer="mark-se">
+<path d="M489.70 245.70 Q525.51 245.70 561.32 245.70" fill="none" stroke="#287451" stroke-width="3.4" stroke-linecap="round" data-draw="true"/>
+<path d="M552.55 250.49 L561.32 245.70 L552.55 240.91" fill="none" stroke="#287451" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+<path d="M498.47 240.91 L489.70 245.70 L498.47 250.49" fill="none" stroke="#287451" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+<g class="board-mark" data-layer="mark-width">
+<path d="M489.70 192.70 Q419.51 192.70 349.32 192.70" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" data-draw="true"/>
+<path d="M358.10 187.91 L349.32 192.70 L358.10 197.49" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+<path d="M489.70 192.70 Q559.89 192.70 630.08 192.70" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" data-draw="true"/>
+<path d="M621.30 197.49 L630.08 192.70 L621.30 187.91" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+<g class="board-mark" data-layer="mark-candidate3">
+<path d="M469.74 212.86 L470.16 214.40 L470.49 215.97 L470.73 217.57 L470.88 219.20 L470.92 220.85 L470.85 222.49 L470.68 224.13 L470.41 225.74 L470.04 227.32 L469.58 228.87 L469.04 230.36 L468.42 231.81 L467.72 233.21 L466.97 234.54 L466.15 235.82 L465.27 237.03 L464.34 238.18 L463.35 239.25 L462.30 240.23 L461.21 241.12 L460.07 241.92 L458.88 242.60 L457.66 243.17 L456.41 243.63 L455.14 243.97 L453.85 244.19 L452.57 244.31 L451.28 244.32 L450.00 244.25 L448.73 244.08 L447.47 243.84 L446.22 243.53 L444.98 243.15 L443.75 242.70 L442.54 242.18 L441.34 241.57 L440.16 240.89 L439.01 240.10 L437.90 239.22 L436.84 238.23 L435.84 237.14 L434.92 235.94 L434.08 234.64 L433.34 233.26 L432.70 231.80 L432.15 230.28 L431.72 228.72 L431.38 227.12 L431.13 225.50 L430.97 223.87 L430.88 222.25 L430.87 220.63 L430.93 219.01 L431.05 217.41 L431.24 215.82 L431.49 214.25 L431.80 212.69 L432.18 211.16 L432.64 209.65 L433.17 208.19 L433.78 206.77 L434.47 205.40 L435.24 204.09 L436.08 202.86 L436.98 201.70 L437.95 200.62 L438.97 199.63 L440.03 198.71 L441.14 197.87 L442.29 197.12 L443.47 196.44 L444.68 195.85 L445.92 195.34 L447.19 194.92 L448.48 194.60 L449.79 194.38 L451.11 194.28 L452.43 194.31 L453.75 194.47 L455.06 194.77 L456.34 195.20 L457.59 195.77 L458.79 196.46 L459.94 197.27 L461.03 198.19 L462.06 199.19 L463.03 200.27 L463.94 201.41 L464.80 202.61 L465.61 203.84 L466.37 205.12 L467.09 206.43 L467.76 207.77 L468.39 209.16 L468.97 210.58 L469.49 212.05 L469.94 213.56 L470.32 215.11 L470.61 216.70" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+<g class="board-mark" data-layer="mark-candidate4">
+<path d="M777.24 212.59 L777.70 214.18 L778.07 215.82 L778.33 217.49 L778.49 219.18 L778.54 220.89 L778.47 222.60 L778.28 224.30 L777.98 225.98 L777.57 227.63 L777.07 229.23 L776.47 230.79 L775.78 232.30 L775.02 233.75 L774.19 235.14 L773.29 236.47 L772.33 237.73 L771.30 238.92 L770.21 240.03 L769.06 241.05 L767.86 241.98 L766.60 242.81 L765.30 243.52 L763.95 244.11 L762.58 244.59 L761.18 244.94 L759.77 245.17 L758.35 245.29 L756.94 245.31 L755.53 245.23 L754.13 245.06 L752.74 244.81 L751.37 244.48 L750.01 244.09 L748.65 243.62 L747.32 243.08 L746.00 242.45 L744.70 241.73 L743.44 240.92 L742.22 240.00 L741.05 238.97 L739.96 237.83 L738.94 236.59 L738.02 235.24 L737.20 233.80 L736.49 232.28 L735.90 230.70 L735.42 229.08 L735.04 227.41 L734.77 225.73 L734.59 224.04 L734.50 222.35 L734.49 220.66 L734.55 218.98 L734.69 217.32 L734.89 215.67 L735.16 214.03 L735.51 212.41 L735.93 210.82 L736.43 209.25 L737.02 207.73 L737.69 206.25 L738.45 204.83 L739.29 203.47 L740.21 202.19 L741.21 200.98 L742.27 199.86 L743.39 198.82 L744.56 197.87 L745.79 197.00 L747.05 196.22 L748.35 195.51 L749.68 194.89 L751.04 194.36 L752.44 193.93 L753.85 193.59 L755.29 193.37 L756.74 193.27 L758.20 193.30 L759.66 193.46 L761.09 193.77 L762.50 194.22 L763.87 194.81 L765.20 195.53 L766.46 196.37 L767.66 197.33 L768.79 198.37 L769.86 199.49 L770.86 200.68 L771.81 201.92 L772.70 203.21 L773.53 204.53 L774.32 205.89 L775.06 207.29 L775.76 208.73 L776.39 210.22 L776.96 211.74 L777.46 213.32 L777.88 214.93 L778.20 216.58" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+<path d="M489.70 304.70 Q623.01 304.70 756.32 304.70" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" data-draw="true"/>
+<path d="M747.54 309.49 L756.32 304.70 L747.54 299.91" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+<path d="M498.47 299.91 L489.70 304.70 L498.47 309.49" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+</svg>
