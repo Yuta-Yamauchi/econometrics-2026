@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="標本から信頼区間を構成し，標準誤差を使って区間幅を取り直す過程をアニメーションで確かめる，計量経済学I・第7回のWeb教材。">
+  <meta name="theme-color" content="#005a85">
+  <title>アニメーションで見る信頼区間｜計量経済学I 第7回</title>
+  <link rel="stylesheet" href="assets/css/lesson.css">
+  <link rel="stylesheet" href="assets/css/parallel-estimated.css">
+  <link rel="stylesheet" href="assets/css/regression-width.css">
+  <script defer src="assets/js/reference-data.js"></script>
+  <script defer src="assets/js/ci-core.js"></script>
+  <script defer src="assets/js/animation.js"></script>
+  <script defer src="assets/js/ci-plots.js"></script>
+  <script defer src="assets/js/derivation-motion.js"></script>
+  <script defer src="assets/js/derivation-view.js"></script>
+  <script defer src="assets/js/derivation.js"></script>
+  <script defer src="assets/js/standardization-motion.js"></script>
+  <script defer src="assets/js/standardization-view.js"></script>
+  <script defer src="assets/js/standardization.js"></script>
+  <script defer src="assets/js/parallel.js"></script>
+  <script defer src="assets/js/parallel-estimated.js"></script>
+  <script defer src="assets/js/regression-width.js"></script>
+  <script defer src="assets/js/app.js"></script>
+</head>
+<body>
+  <div class="course-header">計量経済学I · 第7回</div>
+  <main id="main">
+    <header><h1>アニメーションで見る信頼区間</h1>
+      <p class="lesson-intro">標本から信頼区間を作る過程と，標準誤差を使って標本ごとに区間幅を取り直す過程を，アニメーションで確かめます。</p>
+      <div class="lecture-roadmap" aria-label="内容の順序"><span>① 信頼区間を作る</span><span>② 複数の標本を並べる</span><span>③ 標準誤差で幅を取り直す</span><span>④ 繰り返して確かめる</span><span>⑤ 散布図と区間幅</span></div>
+    </header>
+    <section id="standardization" aria-labelledby="standardization-title">
+      <span class="chapter-number">01 · 信頼区間を作る</span>
+      <h2 id="standardization-title">標準化と信頼区間の逆算</h2>
+      <div class="model-line"><math><msub><mi>Y</mi><mi>i</mi></msub><mspace width=".25em"/><mover><mo>∼</mo><mtext>iid</mtext></mover><mspace width=".25em"/><mi mathvariant="normal">N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mn>10</mn><mn>2</mn></msup><mo>)</mo></math><math class="derive-observed"><mover><mi>y</mi><mo>¯</mo></mover><mo>=</mo><mn id="standardize-mean">48.984</mn></math></div>
+      <div class="settings">
+        <label class="field">標本サイズ n<select id="standardize-n"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="standardize-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <div class="derive-parameters"><math><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo>=</mo><mn id="standardize-se">2.000</mn></math><math><mi>c</mi><mo>=</mo><mn id="standardize-critical">1.960</mn></math></div>
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="standardize-play" class="primary" type="button">再生</button><button id="standardize-back" type="button">戻る</button><button id="standardize-next" type="button">次へ</button><button id="standardize-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="standardize-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <label class="derive-repeat"><input id="standardize-repeat" type="checkbox" checked>標本を替えて繰り返す</label>
+        <span class="counter"><strong id="standardize-position">1</strong> / 10</span>
+      </div>
+      <div id="standardize-samples" class="derive-samples" role="group" aria-label="標本の切り替え" aria-busy="false"><button id="standardize-sample-back" type="button">前の標本</button><output id="standardize-trial">標本 1</output><button id="standardize-sample-next" type="button">次の標本</button></div>
+      <div class="derivation-plots">
+        <article><h3>標準化</h3><canvas id="standardize-density" role="img" aria-label="分布の平行移動と伸縮"></canvas><div id="standardize-standardized" class="current-fit"></div></article>
+        <article class="derivation-algebra"><h3>不等式の変形と信頼区間</h3><div id="standardize-operation" class="derive-operation"></div><div id="standardize-equation-stage" class="derive-equation-stage" role="img" aria-label="標本平均の分布"></div><canvas id="standardize-interval" role="img" aria-label="不等式の変形による信頼区間"></canvas><div id="standardize-result" class="interval-value"></div></article>
+      </div>
+      <input id="standardize-seek" class="derive-seek" type="range" min="0" max="9" step="0.01" value="0" aria-label="標準化と信頼区間の逆算の再生位置">
+      <p id="standardize-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+    <section id="derivation" aria-labelledby="derivation-title">
+      <h2 id="derivation-title">推定誤差から信頼区間へ</h2>
+      <div class="model-line"><math><msub><mi>Y</mi><mi>i</mi></msub><mspace width=".25em"/><mover><mo>∼</mo><mtext>iid</mtext></mover><mspace width=".25em"/><mi mathvariant="normal">N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mn>10</mn><mn>2</mn></msup><mo>)</mo></math><math class="derive-observed"><mover><mi>y</mi><mo>¯</mo></mover><mo>=</mo><mn id="derive-mean">48.984</mn></math></div>
+      <div class="settings">
+        <label class="field">標本サイズ n<select id="derive-n"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="derive-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <div class="derive-parameters"><math><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo>=</mo><mn id="derive-se">2.000</mn></math><math><mi>c</mi><mo>=</mo><mn id="derive-critical">1.960</mn></math></div>
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="derive-play" class="primary" type="button">再生</button><button id="derive-back" type="button">戻る</button><button id="derive-next" type="button">次へ</button><button id="derive-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="derive-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <label class="derive-repeat"><input id="derive-repeat" type="checkbox" checked>標本を替えて繰り返す</label>
+        <span class="counter"><strong id="derive-position">1</strong> / 7</span>
+      </div>
+      <div id="derive-samples" class="derive-samples" role="group" aria-label="標本の切り替え" aria-busy="false"><button id="derive-sample-back" type="button">前の標本</button><output id="derive-trial">標本 1</output><button id="derive-sample-next" type="button">次の標本</button></div>
+      <div class="derivation-plots">
+        <article><h3>推定誤差の分布</h3><div class="derive-error-law"><math><mi>E</mi><mo>=</mo><mover><mi>Y</mi><mo>¯</mo></mover><mo>−</mo><mi>μ</mi><mo>∼</mo><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><mfrac><msup><mi>σ</mi><mn>2</mn></msup><mi>n</mi></mfrac><mo>)</mo></math></div><canvas id="derive-density" role="img" aria-label="推定誤差の理論分布と中央の確率範囲"></canvas><div id="derive-error-width" class="current-fit"></div></article>
+        <article class="derivation-algebra"><h3>信頼区間の構成</h3><div id="derive-operation" class="derive-operation"></div><div id="derive-equation-stage" class="derive-equation-stage" role="img" aria-label="母平均と推定誤差の関係"></div><canvas id="derive-interval" role="img" aria-label="誤差の範囲を反転し，標本平均を加えて構成する信頼区間"></canvas><div id="derive-result" class="interval-value"></div></article>
+      </div>
+      <input id="derive-seek" class="derive-seek" type="range" min="0" max="6" step="0.01" value="0" aria-label="推定誤差から信頼区間を構成する再生位置">
+      <p id="derive-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+    <section id="parallel" aria-labelledby="parallel-title">
+      <span class="chapter-number">02 · 複数の標本を並べる</span>
+      <h2 id="parallel-title">複数の標本から信頼区間へ</h2>
+      <div class="model-line"><math><msub><mi>Y</mi><mi>i</mi></msub><mspace width=".25em"/><mover><mo>∼</mo><mtext>iid</mtext></mover><mspace width=".25em"/><mi mathvariant="normal">N</mi><mo>(</mo><mi>μ</mi><mo>,</mo><msup><mn>10</mn><mn>2</mn></msup><mo>)</mo></math><math><mover><mi>Y</mi><mo>¯</mo></mover><mo>±</mo><mi>h</mi></math><math><mi>h</mi><mo>=</mo><mi>c</mi><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac><mo>=</mo><mn id="parallel-width">3.920</mn></math></div>
+      <div class="settings parallel-settings">
+        <label class="field">標本サイズ n<select id="parallel-n"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="parallel-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <label class="field">同時に表示する標本数<select id="parallel-size"><option value="3">3</option><option value="6" selected>6</option><option value="10">10</option></select></label>
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="parallel-play" class="primary" type="button">再生</button><button id="parallel-back" type="button">戻る</button><button id="parallel-next" type="button">次へ</button><button id="parallel-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="parallel-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <label class="derive-repeat"><input id="parallel-repeat" type="checkbox" checked>標本を替えて繰り返す</label>
+        <label class="derive-repeat"><input id="parallel-truth" type="checkbox">母平均を表示</label>
+        <span class="counter"><strong id="parallel-position">1</strong> / 3</span>
+      </div>
+      <div class="derive-samples" role="group" aria-label="標本群の切り替え"><button id="parallel-group-back" type="button">前の組</button><output id="parallel-group">標本 1–6</output><button id="parallel-group-next" type="button">次の組</button></div>
+      <h3 id="parallel-phase">標本</h3>
+      <canvas id="parallel-plot" role="img" aria-label="複数の標本から同時に作る信頼区間"></canvas>
+      <input id="parallel-seek" class="derive-seek" type="range" min="0" max="2" step="0.01" value="0" aria-label="複数の信頼区間を構成する再生位置">
+    </section>
+    <section id="parallel-estimated" aria-labelledby="estimated-title">
+      <span class="chapter-number">03 · 標準誤差で幅を取り直す</span>
+      <h2 id="estimated-title">標準誤差を使った信頼区間</h2>
+      <p class="estimated-intro">同じ標本について，母標準偏差を使う共通の幅から，標本ごとの標準誤差を使う幅へ取り直します。中心を標本平均に固定し，区間の両端を動かします。</p>
+      <div class="settings parallel-settings">
+        <label class="field">標本サイズ n<select id="estimated-n"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="estimated-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <label class="field">同時に表示する標本数<select id="estimated-size"><option value="3">3</option><option value="6" selected>6</option><option value="10">10</option></select></label>
+      </div>
+      <div class="model-line"><span>標本標準偏差 <math><msub><mi>s</mi><mi>Y</mi></msub></math></span><span>標準誤差 <math><mi mathvariant="normal">se</mi><mo>(</mo><mover><mi>Y</mi><mo>¯</mo></mover><mo>)</mo><mo>=</mo><mfrac><msub><mi>s</mi><mi>Y</mi></msub><msqrt><mi>n</mi></msqrt></mfrac></math></span></div>
+      <div class="estimated-formulas">
+        <div id="estimated-known-formula"><span class="formula-label">σ を使う場合：共通の半幅</span><math><msub><mi>h</mi><mn>0</mn></msub><mo>=</mo><mi>c</mi><mfrac><mi>σ</mi><msqrt><mi>n</mi></msqrt></mfrac></math><div class="estimated-values"><span id="estimated-known-c">1.960</span> × <span id="estimated-known-sd">2.000</span> = <strong id="estimated-known-width">3.920</strong></div></div>
+        <div id="estimated-estimated-formula"><span class="formula-label">標準誤差を使う場合：標本ごとの半幅</span><math><mi>h</mi><mo>=</mo><msub><mi>t</mi><mrow><mn id="estimated-probability">0.975</mn><mo>,</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><mi mathvariant="normal">se</mi><mo>(</mo><mover><mi>Y</mi><mo>¯</mo></mover><mo>)</mo></math><div class="estimated-values"><strong id="estimated-t">2.064</strong> × 各標本の標準誤差　（自由度 <span id="estimated-df">24</span>）</div></div>
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="estimated-play" class="primary" type="button">再生</button><button id="estimated-back" type="button">戻る</button><button id="estimated-next" type="button">次へ</button><button id="estimated-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="estimated-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <label class="derive-repeat"><input id="estimated-repeat" type="checkbox" checked>標本を替えて繰り返す</label>
+        <label class="derive-repeat"><input id="estimated-reference" type="checkbox" checked>元の幅を残す</label>
+        <label class="derive-repeat"><input id="estimated-truth" type="checkbox">母平均を表示</label>
+        <span class="counter"><strong id="estimated-position">1</strong> / 5</span>
+      </div>
+      <div class="derive-samples" role="group" aria-label="標本群の切り替え"><button id="estimated-group-back" type="button">前の組</button><output id="estimated-group">標本 1–6</output><button id="estimated-group-next" type="button">次の組</button></div>
+      <h3 id="estimated-phase">標本</h3><p id="estimated-operation"></p>
+      <div class="estimated-legend"><span class="estimated-mean">標本平均</span><span>σ を使う区間</span><span class="estimated-reference">取り直す前の幅</span><span class="estimated-current">標準誤差を使う区間</span></div>
+      <canvas id="estimated-plot" role="img" aria-label="複数の標本で標準誤差を使って信頼区間の幅を取り直す過程"></canvas>
+      <label for="estimated-seek" class="estimated-seek-label">標本 → 標本平均 → 共通の区間幅 → 標準誤差の計算 → 区間幅の取り直し</label>
+      <input id="estimated-seek" class="derive-seek" type="range" min="0" max="4" step="0.01" value="0">
+      <p id="estimated-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+    <section id="mean" aria-labelledby="mean-title">
+      <span class="chapter-number">04 · 繰り返して確かめる</span>
+      <h2 id="mean-title">母平均のシミュレーション</h2>
+      <div class="model-line"><math><msub><mi>Y</mi><mi>i</mi></msub><mspace width=".25em"/><mover><mo>∼</mo><mtext>iid</mtext></mover><mspace width=".25em"/><mi mathvariant="normal">N</mi><mo>(</mo><mn>50</mn><mo>,</mo><msup><mn>10</mn><mn>2</mn></msup><mo>)</mo></math><div id="mean-formula" class="formula"></div></div>
+      <div class="settings">
+        <label class="field">標本サイズ n<select id="mean-n"><option value="5">5</option><option value="25" selected>25</option><option value="100">100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="mean-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        <fieldset><legend>母標準偏差</legend><div class="segments"><label><input type="radio" name="mean-method" value="known" checked><span>σ 既知</span></label><label><input type="radio" name="mean-method" value="estimated"><span>σ 未知</span></label></div></fieldset>
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="mean-play" type="button" class="primary">再生</button><button id="mean-step" type="button">1回を再生</button><button id="mean-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="mean-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <span class="counter"><strong id="mean-count">1</strong> / 500回</span>
+      </div>
+      <div class="legend"><span class="key truth">母平均</span><span class="key estimate">標本平均</span><span class="key covered">母平均を含む</span><span class="key missed">含まない ×</span></div>
+      <div class="plots">
+        <article id="mean-stage-0"><h3>標本</h3><canvas id="mean-sample" role="img" aria-label="今回の標本の観測値"></canvas><div class="current-fit"><math><mover><mi>Y</mi><mo>¯</mo></mover><mo>=</mo><mn id="mean-estimate">—</mn></math></div></article>
+        <article id="mean-stage-1"><h3>信頼区間</h3><canvas id="mean-interval" role="img" aria-label="推定値から構成する信頼区間"></canvas><div id="mean-interval-value" class="interval-value"></div></article>
+        <article id="mean-stage-2"><h3>区間の蓄積</h3><canvas id="mean-history" role="img" aria-label="各回の信頼区間と母数"></canvas><div class="moments"><span>含む割合 <strong id="mean-coverage">100.0%</strong></span><span id="mean-fraction">1 / 1</span></div></article>
+      </div>
+      <div class="inspect-row"><label for="mean-inspect">標本 <output id="mean-trial-label">1回目</output></label><input id="mean-inspect" type="range" min="1" max="1" value="1"><button id="mean-miss" type="button">含まない区間</button></div>
+      <div class="batch"><button id="mean-batch" type="button">100回追加</button><button id="mean-all" type="button">500回の結果</button></div>
+      <p class="sr-only" id="mean-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="regression" aria-labelledby="regression-title">
+      <h2 id="regression-title">回帰係数のシミュレーション</h2>
+      <div class="model-line regression-model"><math><msub><mi>Y</mi><mi>i</mi></msub><mo>=</mo><mn>2</mn><mo>+</mo><mn>1.5</mn><msub><mi>X</mi><mi>i</mi></msub><mo>+</mo><msub><mi>U</mi><mi>i</mi></msub></math><math><msub><mi>U</mi><mi>i</mi></msub><mspace width=".25em"/><mover><mo>∼</mo><mtext>iid</mtext></mover><mspace width=".25em"/><mi mathvariant="normal">N</mi><mo>(</mo><mn>0</mn><mo>,</mo><msup><mn>1.5</mn><mn>2</mn></msup><mo>)</mo></math><div id="regression-formula" class="formula"></div></div>
+      <div class="settings">
+        <label class="field">標本サイズ n<select id="regression-n"><option value="10">10</option><option value="25">25</option><option value="100" selected>100</option><option value="400">400</option></select></label>
+        <label class="field">信頼水準<select id="regression-level"><option value="90">90%</option><option value="95" selected>95%</option><option value="99">99%</option></select></label>
+        
+      </div>
+      <div class="controls">
+        <div class="playback"><button id="regression-play" type="button" class="primary">再生</button><button id="regression-step" type="button">1回を再生</button><button id="regression-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="regression-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+        <span class="counter"><strong id="regression-count">1</strong> / 500回</span>
+      </div>
+      <div class="legend"><span class="key truth">母回帰直線・母回帰係数</span><span class="key estimate">推定値</span><span class="key covered">母回帰係数を含む</span><span class="key missed">含まない ×</span></div>
+      <div class="plots">
+        <article id="regression-stage-0"><h3>標本</h3><canvas id="regression-sample" role="img" aria-label="標本の散布図と回帰直線"></canvas><div class="current-fit"><math><msub><mover><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><mo>=</mo><mn id="regression-estimate">—</mn></math></div></article>
+        <article id="regression-stage-1"><h3>信頼区間</h3><canvas id="regression-interval" role="img" aria-label="推定値から構成する信頼区間"></canvas><div id="regression-interval-value" class="interval-value"></div></article>
+        <article id="regression-stage-2"><h3>区間の蓄積</h3><canvas id="regression-history" role="img" aria-label="各回の信頼区間と母数"></canvas><div class="moments"><span>含む割合 <strong id="regression-coverage">100.0%</strong></span><span id="regression-fraction">1 / 1</span></div></article>
+      </div>
+      <div class="inspect-row"><label for="regression-inspect">標本 <output id="regression-trial-label">1回目</output></label><input id="regression-inspect" type="range" min="1" max="1" value="1"><button id="regression-miss" type="button">含まない区間</button></div>
+      <div class="batch"><button id="regression-batch" type="button">100回追加</button><button id="regression-all" type="button">500回の結果</button></div>
+      <p class="sr-only" id="regression-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="regression-width" aria-labelledby="width-title">
+      <span class="chapter-number">05 · 散布図と区間幅</span>
+      <h2 id="width-title">回帰係数の区間の幅</h2>
+      <p class="width-intro">点の数と推定直線をそろえ，散らばり方を変えて比較します。基準を残し，もう一方の散布図と傾きの信頼区間を動かします。</p>
+      <div class="width-settings">
+        <fieldset><legend>変えるもの</legend><div class="segments">
+          <label><input type="radio" name="width-mode" value="noise" checked><span>縦のばらつき</span></label>
+          <label><input type="radio" name="width-mode" value="spread"><span>横の広がり</span></label>
+        </div></fieldset>
+        <p class="width-fixed">各100点・推定直線 <math><mover><mi>Y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mo>+</mo><mn>1.5</mn><mi>X</mi></math>・信頼水準95%</p>
+      </div>
+      <p id="width-operation">説明変数の位置を固定し，推定直線からの縦方向のずれを広げます。</p>
+      <div class="controls">
+        <div class="playback"><button id="width-play" class="primary" type="button">再生</button><button id="width-back" type="button">戻る</button><button id="width-next" type="button">次へ</button><button id="width-reset" type="button">リセット</button></div>
+        <label class="speed">速度<select id="width-speed"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select></label>
+      </div>
+      <div class="width-factor"><label id="width-seek-label" for="width-seek">縦方向のずれの倍率</label><input id="width-seek" type="range" min="1" max="2" step="0.01" value="1"><output id="width-factor" for="width-seek">1.00倍</output></div>
+      <div class="width-legend"><span class="width-dot">標本の点</span><span>推定直線</span><span class="width-bounds">区間の両端に対応する傾き</span></div>
+      <div class="width-plots">
+        <article>
+          <h3>基準</h3>
+          <canvas id="width-base-plot" role="img" aria-label="基準となる散布図と傾きの95%信頼区間"></canvas>
+          <p class="width-interval" id="width-base-interval"></p>
+          <dl class="width-statistics">
+            <div><dt>残差の標準偏差 <math><msub><mi>s</mi><mi>U</mi></msub></math></dt><dd id="width-base-sd"></dd></div>
+            <div><dt>横の広がり <math><msub><mi>S</mi><mrow><mi>X</mi><mi>X</mi></mrow></msub></math></dt><dd id="width-base-sxx"></dd></div>
+            <div><dt>標準誤差</dt><dd id="width-base-se"></dd></div>
+          </dl>
+        </article>
+        <article>
+          <h3 id="width-current-title">縦方向のずれ：1.00倍</h3>
+          <canvas id="width-current-plot" role="img" aria-label="広がりを変えた散布図と傾きの95%信頼区間"></canvas>
+          <p class="width-interval" id="width-current-interval"></p>
+          <dl class="width-statistics">
+            <div><dt>残差の標準偏差 <math><msub><mi>s</mi><mi>U</mi></msub></math></dt><dd id="width-current-sd"></dd></div>
+            <div><dt>横の広がり <math><msub><mi>S</mi><mrow><mi>X</mi><mi>X</mi></mrow></msub></math></dt><dd id="width-current-sxx"></dd></div>
+            <div><dt>標準誤差</dt><dd id="width-current-se"></dd></div>
+          </dl>
+        </article>
+      </div>
+      <div class="width-result"><p>区間幅は基準の <strong id="width-ratio">1.00</strong> 倍</p><math><mtext>半幅</mtext><mo>=</mo><msub><mi>t</mi><mrow><mn>0.975</mn><mo>,</mo><mn>98</mn></mrow></msub><mfrac><msub><mi>s</mi><mi>U</mi></msub><msqrt><msub><mi>S</mi><mrow><mi>X</mi><mi>X</mi></mrow></msub></msqrt></mfrac></math></div>
+      <p id="width-explanation"></p>
+      <p id="width-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+    
+  </main>
+  <noscript>シミュレーションの表示にはJavaScriptが必要です。</noscript>
+</body>
+</html>

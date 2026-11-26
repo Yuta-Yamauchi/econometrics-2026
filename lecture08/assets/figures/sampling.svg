@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="標本サイズとOLSの傾きの分布">
+<defs><clipPath id="plot-clip"><rect x="84" y="46" width="764" height="386"/></clipPath></defs>
+<path d="M84.00 46.00 L84.00 432.00" fill="none" stroke="#b5bfc4" stroke-width="1.5"  />
+<path d="M84.00 432.00 L848.00 432.00" fill="none" stroke="#b5bfc4" stroke-width="1.5"  />
+<path d="M160.40 432.00 L160.40 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="160.40" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >1</text>
+<path d="M313.20 432.00 L313.20 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="313.20" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >2</text>
+<path d="M466.00 432.00 L466.00 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="466.00" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >3</text>
+<path d="M618.80 432.00 L618.80 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="618.80" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >4</text>
+<path d="M771.60 432.00 L771.60 440.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="771.60" y="467.00" font-size="19" fill="#20313b" text-anchor="middle" >5</text>
+<path d="M77.00 432.00 L84.00 432.00" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="68.00" y="439.00" font-size="19" fill="#20313b" text-anchor="end" >0</text>
+<path d="M77.00 330.42 L84.00 330.42" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="68.00" y="337.42" font-size="19" fill="#20313b" text-anchor="end" >1</text>
+<path d="M77.00 228.84 L84.00 228.84" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="68.00" y="235.84" font-size="19" fill="#20313b" text-anchor="end" >2</text>
+<path d="M77.00 127.26 L84.00 127.26" fill="none" stroke="#7b858c" stroke-width="1"  />
+<text x="68.00" y="134.26" font-size="19" fill="#20313b" text-anchor="end" >3</text>
+<text x="466.00" y="507.00" font-size="22" fill="#20313b" text-anchor="middle" >傾きの推定値</text>
+<text x="84.00" y="26.00" font-size="22" fill="#20313b" text-anchor="start" >密度</text>
+<g data-layer="bars">
+<rect x="85.00" y="432.00" width="13.28" height="0.00" fill="#9bbfce" class="morph-bar" data-y1="432.00" data-h1="0.00" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="100.28" y="432.00" width="13.28" height="0.00" fill="#9bbfce" class="morph-bar" data-y1="432.00" data-h1="0.00" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="115.56" y="432.00" width="13.28" height="0.00" fill="#9bbfce" class="morph-bar" data-y1="432.00" data-h1="0.00" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="130.84" y="431.59" width="13.28" height="0.41" fill="#9bbfce" class="morph-bar" data-y1="431.59" data-h1="0.41" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="146.12" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="161.40" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="176.68" y="431.59" width="13.28" height="0.41" fill="#9bbfce" class="morph-bar" data-y1="431.59" data-h1="0.41" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="191.96" y="431.19" width="13.28" height="0.81" fill="#9bbfce" class="morph-bar" data-y1="431.19" data-h1="0.81" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="207.24" y="430.37" width="13.28" height="1.63" fill="#9bbfce" class="morph-bar" data-y1="430.37" data-h1="1.63" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="222.52" y="429.36" width="13.28" height="2.64" fill="#9bbfce" class="morph-bar" data-y1="429.36" data-h1="2.64" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="237.80" y="427.53" width="13.28" height="4.47" fill="#9bbfce" class="morph-bar" data-y1="427.53" data-h1="4.47" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="253.08" y="427.94" width="13.28" height="4.06" fill="#9bbfce" class="morph-bar" data-y1="427.94" data-h1="4.06" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="268.36" y="425.30" width="13.28" height="6.70" fill="#9bbfce" class="morph-bar" data-y1="425.30" data-h1="6.70" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="283.64" y="422.45" width="13.28" height="9.55" fill="#9bbfce" class="morph-bar" data-y1="422.45" data-h1="9.55" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="298.92" y="420.62" width="13.28" height="11.38" fill="#9bbfce" class="morph-bar" data-y1="420.62" data-h1="11.38" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="314.20" y="414.12" width="13.28" height="17.88" fill="#9bbfce" class="morph-bar" data-y1="414.12" data-h1="17.88" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="329.48" y="408.64" width="13.28" height="23.36" fill="#9bbfce" class="morph-bar" data-y1="408.64" data-h1="23.36" data-y2="431.80" data-h2="0.20" data-y3="432.00" data-h3="0.00"/>
+<rect x="344.76" y="403.56" width="13.28" height="28.44" fill="#9bbfce" class="morph-bar" data-y1="403.56" data-h1="28.44" data-y2="430.58" data-h2="1.42" data-y3="432.00" data-h3="0.00"/>
+<rect x="360.04" y="398.48" width="13.28" height="33.52" fill="#9bbfce" class="morph-bar" data-y1="398.48" data-h1="33.52" data-y2="428.75" data-h2="3.25" data-y3="432.00" data-h3="0.00"/>
+<rect x="375.32" y="388.12" width="13.28" height="43.88" fill="#9bbfce" class="morph-bar" data-y1="388.12" data-h1="43.88" data-y2="422.45" data-h2="9.55" data-y3="432.00" data-h3="0.00"/>
+<rect x="390.60" y="379.38" width="13.28" height="52.62" fill="#9bbfce" class="morph-bar" data-y1="379.38" data-h1="52.62" data-y2="400.92" data-h2="31.08" data-y3="432.00" data-h3="0.00"/>
+<rect x="405.88" y="373.69" width="13.28" height="58.31" fill="#9bbfce" class="morph-bar" data-y1="373.69" data-h1="58.31" data-y2="380.60" data-h2="51.40" data-y3="429.56" data-h3="2.44"/>
+<rect x="421.16" y="369.43" width="13.28" height="62.57" fill="#9bbfce" class="morph-bar" data-y1="369.43" data-h1="62.57" data-y2="339.97" data-h2="92.03" data-y3="391.98" data-h3="40.02"/>
+<rect x="436.44" y="367.40" width="13.28" height="64.60" fill="#9bbfce" class="morph-bar" data-y1="367.40" data-h1="64.60" data-y2="294.26" data-h2="137.74" data-y3="276.99" data-h3="155.01"/>
+<rect x="451.72" y="358.46" width="13.28" height="73.54" fill="#9bbfce" class="morph-bar" data-y1="358.46" data-h1="73.54" data-y2="258.91" data-h2="173.09" data-y3="117.71" data-h3="314.29"/>
+<rect x="467.00" y="359.68" width="13.28" height="72.32" fill="#9bbfce" class="morph-bar" data-y1="359.68" data-h1="72.32" data-y2="254.24" data-h2="177.76" data-y3="125.64" data-h3="306.36"/>
+<rect x="482.28" y="359.47" width="13.28" height="72.53" fill="#9bbfce" class="morph-bar" data-y1="359.47" data-h1="72.53" data-y2="287.15" data-h2="144.85" data-y3="275.97" data-h3="156.03"/>
+<rect x="497.56" y="362.93" width="13.28" height="69.07" fill="#9bbfce" class="morph-bar" data-y1="362.93" data-h1="69.07" data-y2="338.14" data-h2="93.86" data-y3="395.23" data-h3="36.77"/>
+<rect x="512.84" y="377.76" width="13.28" height="54.24" fill="#9bbfce" class="morph-bar" data-y1="377.76" data-h1="54.24" data-y2="373.69" data-h2="58.31" data-y3="427.33" data-h3="4.67"/>
+<rect x="528.12" y="378.37" width="13.28" height="53.63" fill="#9bbfce" class="morph-bar" data-y1="378.37" data-h1="53.63" data-y2="407.21" data-h2="24.79" data-y3="432.00" data-h3="0.00"/>
+<rect x="543.40" y="389.13" width="13.28" height="42.87" fill="#9bbfce" class="morph-bar" data-y1="389.13" data-h1="42.87" data-y2="421.44" data-h2="10.56" data-y3="431.80" data-h3="0.20"/>
+<rect x="558.68" y="395.63" width="13.28" height="36.37" fill="#9bbfce" class="morph-bar" data-y1="395.63" data-h1="36.37" data-y2="427.73" data-h2="4.27" data-y3="432.00" data-h3="0.00"/>
+<rect x="573.96" y="399.09" width="13.28" height="32.91" fill="#9bbfce" class="morph-bar" data-y1="399.09" data-h1="32.91" data-y2="430.58" data-h2="1.42" data-y3="432.00" data-h3="0.00"/>
+<rect x="589.24" y="410.47" width="13.28" height="21.53" fill="#9bbfce" class="morph-bar" data-y1="410.47" data-h1="21.53" data-y2="431.80" data-h2="0.20" data-y3="432.00" data-h3="0.00"/>
+<rect x="604.52" y="413.51" width="13.28" height="18.49" fill="#9bbfce" class="morph-bar" data-y1="413.51" data-h1="18.49" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="619.80" y="419.20" width="13.28" height="12.80" fill="#9bbfce" class="morph-bar" data-y1="419.20" data-h1="12.80" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="635.08" y="423.67" width="13.28" height="8.33" fill="#9bbfce" class="morph-bar" data-y1="423.67" data-h1="8.33" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="650.36" y="425.70" width="13.28" height="6.30" fill="#9bbfce" class="morph-bar" data-y1="425.70" data-h1="6.30" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="665.64" y="428.14" width="13.28" height="3.86" fill="#9bbfce" class="morph-bar" data-y1="428.14" data-h1="3.86" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="680.92" y="429.97" width="13.28" height="2.03" fill="#9bbfce" class="morph-bar" data-y1="429.97" data-h1="2.03" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="696.20" y="430.17" width="13.28" height="1.83" fill="#9bbfce" class="morph-bar" data-y1="430.17" data-h1="1.83" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="711.48" y="430.58" width="13.28" height="1.42" fill="#9bbfce" class="morph-bar" data-y1="430.58" data-h1="1.42" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="726.76" y="431.59" width="13.28" height="0.41" fill="#9bbfce" class="morph-bar" data-y1="431.59" data-h1="0.41" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="742.04" y="430.98" width="13.28" height="1.02" fill="#9bbfce" class="morph-bar" data-y1="430.98" data-h1="1.02" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="757.32" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="772.60" y="430.78" width="13.28" height="1.22" fill="#9bbfce" class="morph-bar" data-y1="430.78" data-h1="1.22" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="787.88" y="432.00" width="13.28" height="0.00" fill="#9bbfce" class="morph-bar" data-y1="432.00" data-h1="0.00" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="803.16" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="818.44" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+<rect x="833.72" y="431.80" width="13.28" height="0.20" fill="#9bbfce" class="morph-bar" data-y1="431.80" data-h1="0.20" data-y2="432.00" data-h2="0.00" data-y3="432.00" data-h3="0.00"/>
+</g>
+<g data-layer="target">
+<path d="M466.00 46.00 L466.00 432.00" fill="none" stroke="#08658a" stroke-width="2.5" stroke-dasharray="7 6" />
+</g>
+<g class="board-mark" data-layer="mark-center">
+<path d="M485.97 460.53 L486.41 461.76 L486.76 463.02 L487.01 464.30 L487.16 465.60 L487.21 466.92 L487.14 468.23 L486.96 469.54 L486.68 470.83 L486.29 472.10 L485.80 473.33 L485.23 474.53 L484.58 475.69 L483.85 476.80 L483.06 477.87 L482.20 478.90 L481.28 479.87 L480.30 480.78 L479.26 481.64 L478.16 482.42 L477.01 483.14 L475.81 483.77 L474.57 484.32 L473.29 484.78 L471.97 485.14 L470.64 485.42 L469.29 485.59 L467.94 485.69 L466.59 485.70 L465.25 485.64 L463.91 485.51 L462.59 485.31 L461.27 485.07 L459.97 484.76 L458.68 484.40 L457.41 483.98 L456.15 483.50 L454.91 482.95 L453.70 482.32 L452.54 481.61 L451.43 480.82 L450.38 479.95 L449.41 478.99 L448.53 477.95 L447.75 476.85 L447.07 475.68 L446.51 474.46 L446.05 473.21 L445.69 471.93 L445.43 470.64 L445.26 469.34 L445.17 468.04 L445.16 466.74 L445.22 465.45 L445.35 464.17 L445.54 462.90 L445.80 461.64 L446.13 460.39 L446.54 459.17 L447.02 457.96 L447.58 456.79 L448.22 455.65 L448.94 454.56 L449.74 453.52 L450.62 452.53 L451.57 451.60 L452.59 450.74 L453.66 449.94 L454.78 449.21 L455.94 448.54 L457.15 447.93 L458.39 447.39 L459.66 446.92 L460.96 446.51 L462.29 446.17 L463.65 445.92 L465.02 445.75 L466.41 445.67 L467.80 445.69 L469.18 445.82 L470.56 446.05 L471.90 446.40 L473.21 446.85 L474.47 447.41 L475.68 448.06 L476.82 448.79 L477.91 449.59 L478.92 450.46 L479.88 451.37 L480.78 452.32 L481.63 453.31 L482.43 454.33 L483.18 455.38 L483.89 456.46 L484.55 457.56 L485.16 458.71 L485.71 459.88 L486.18 461.09 L486.58 462.33 L486.89 463.60" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+<path d="M634.08 106.95 Q556.75 141.81 472.11 147.58" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" data-draw="true"/>
+<path d="M480.54 142.20 L472.11 147.58 L481.19 151.77" fill="none" stroke="#b83d35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" data-draw="true"/>
+</g>
+</svg>

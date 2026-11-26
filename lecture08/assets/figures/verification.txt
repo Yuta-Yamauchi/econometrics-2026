@@ -1,0 +1,1 @@
+R 4.6.1; 19 SVG figures; saved input data verified; n=240 slope=3.127549090640; HC0 SE=0.234368339272
